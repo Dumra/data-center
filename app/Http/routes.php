@@ -15,8 +15,12 @@ $router->get('/', function () {
     return view('welcome');
 });
 
-Route::group(['domain' => 'api.data-center.dev', 'prefix' => 'api/v1'], function() {
-    Route::get('/get/value', function() {
-         return response('Normal, 200');
-   });
+$router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function() use($router) {
+    $router->get('/get/drone/{name?}', 'Drones\DroneController@getDrone');
+
+    $router->post('/add/drone', 'Drones\DroneController@createDrone');
+
+    $router->put('update/drone/{name}', 'Drones\DroneController@updateDrone');
+
+    $router->delete('delete/drone/{name}', 'Drones\DroneController@deleteDrone');
 });

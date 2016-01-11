@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(DroneTableSeeder::class);
+        $this->call(SensorTableSeeder::class);
 
         Model::reguard();
     }

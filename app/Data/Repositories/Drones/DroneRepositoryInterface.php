@@ -1,0 +1,17 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: dshul
+ * Date: 1/10/2016
+ * Time: 11:22 PM
+ */
+
+namespace App\Data\Repositories\Drones;
+
+interface DroneRepositoryInterface
+{
+    public function getDrone($name);
+    public function updateDrone($name, $requestArray);
+    public function destroyDrone($name);
+    public function createDrone($array);
+}
