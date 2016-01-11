@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dshul
- * Date: 1/10/2016
- * Time: 11:27 PM
- */
 
 namespace App\Http\Controllers\Drones;
 
 use App\Http\Controllers\Controller;
 use App\Data\Repositories\Drones\DroneRepositoryInterface;
-use App\Http\Requests\UpdateDroneRequest;
-use App\Http\Requests\CreateDroneRequest;
+use App\Http\Requests\Drones\UpdateDroneRequest;
+use App\Http\Requests\Drones\CreateDroneRequest;
 
 class DroneController extends Controller
 {
@@ -26,6 +20,36 @@ class DroneController extends Controller
     {
         return response($this->drone->getDrone($name));
     }
+	
+	public function getDroneByType($type)
+	{
+		return response($this->drone->getDroneBy('type', $type));
+	}
+	
+	public function getSensorsByDroneName($droneName)
+	{
+		return response($this->drone->getSensorsByDroneName($droneName));
+	}
+	
+	public function getRoutesByDroneName($droneName)
+	{
+		return response($this->drone->getRoutesByDroneName($droneName));
+	}
+	
+	public function getCommandsByDroneName($droneName)
+	{
+		return response($this->drone->getCommandsByDroneName($droneName));
+	}
+	
+	public function getDroneByStatus($status)
+	{
+		return response($this->drone->getDroneBy('status', $status));
+	}
+	
+	public function getDroneByAvailable($available)
+	{
+		return response($this->drone->getDroneBy('available', $available));
+	}
 
     public function createDrone(CreateDroneRequest $request)
     {
@@ -34,12 +58,12 @@ class DroneController extends Controller
 
     public function updateDrone(UpdateDroneRequest $request, $name)
     {
-        return ['success' => $this->drone->updateDrone($name, $request->all())];
+        return response($this->drone->updateDrone($name, $request->all()));
     }
 
     public function deleteDrone($name)
     {
-        return ['success' => $this->drone->destroyDrone($name)];
+        return response($this->drone->destroyDrone($name));
     }
 
 }

@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class DroneServiceProvider extends ServiceProvider
+class DataCenterServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -25,5 +25,8 @@ class DroneServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\\Data\\Repositories\\Drones\\DroneRepositoryInterface',
             'App\\Data\\Repositories\\Drones\\DroneRepository');
+		
+		$this->app->bind('App\\Data\\Repositories\\Sensors\\SensorRepositoryInterface',
+            'App\\Data\\Repositories\\Sensors\\SensorRepository');
     }
 }

@@ -6,9 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sensor extends Model
 {
+	use SoftDeletes;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+	protected $touches = ['drone'];
+	
+    protected $dates = ['deleted_at'];
+	
     protected $table = 'sensors';
 
-    protected $fillable = ['name', 'drone_id'];
+    protected $fillable = ['name', 'drone_id'];	
 
     public function drone()
     {

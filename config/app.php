@@ -148,7 +148,7 @@ return [
          * Custom
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        App\Providers\DroneServiceProvider::class,
+        App\Providers\DataCenterServiceProvider::class,
 
     ],
 

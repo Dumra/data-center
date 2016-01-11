@@ -14,4 +14,8 @@ interface DroneRepositoryInterface
     public function updateDrone($name, $requestArray);
     public function destroyDrone($name);
     public function createDrone($array);
+	public function getDroneBy($type, $value);
+	public function getSensorsByDroneName($name);
+	public function getRoutesByDroneName($name);
+	public function getCommandsByDroneName($name);
 }
