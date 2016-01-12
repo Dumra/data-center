@@ -24,8 +24,8 @@ class UpdateSensorRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'unique:sensors|string|max:50',
-			'drone_name' => 'exists:drones, name'
+            'name' => 'unique:sensors|string|max:50|regex:/^[\S]+$/',
+			'drone_name' => 'exists:drones,name'
         ];
     }
 }

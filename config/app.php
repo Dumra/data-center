@@ -149,6 +149,7 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\DataCenterServiceProvider::class,
+        GrahamCampbell\Throttle\ThrottleServiceProvider::class
 
     ],
 
@@ -198,6 +199,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
 
     ],
 

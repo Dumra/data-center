@@ -11,19 +11,14 @@ class SensorTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sensors')->insert([
-            [
-                'name' => 'Sensor1_1',
-                'drone_id' => '1'
-            ],
-            [
-                'name' => 'Sensor2_1',
-                'drone_id' => '1'
-            ],
-            [
-                'name' => 'Sensor1_2',
-                'drone_id' => '2'
-            ]
+        factory(App\Data\Models\Sensor::class)->create([
+            'name' => 'Gaz1',
+            'drone_id' => 1
+        ]);
+
+        factory(App\Data\Models\Sensor::class)->create([
+            'name' => 'Temperature',
+            'drone_id' => 2
         ]);
     }
 }

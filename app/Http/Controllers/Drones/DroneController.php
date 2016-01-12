@@ -20,36 +20,36 @@ class DroneController extends Controller
     {
         return response($this->drone->getDrone($name));
     }
-	
-	public function getDroneByType($type)
-	{
-		return response($this->drone->getDroneBy('type', $type));
-	}
-	
-	public function getSensorsByDroneName($droneName)
-	{
-		return response($this->drone->getSensorsByDroneName($droneName));
-	}
-	
-	public function getRoutesByDroneName($droneName)
-	{
-		return response($this->drone->getRoutesByDroneName($droneName));
-	}
-	
-	public function getCommandsByDroneName($droneName)
-	{
-		return response($this->drone->getCommandsByDroneName($droneName));
-	}
-	
-	public function getDroneByStatus($status)
-	{
-		return response($this->drone->getDroneBy('status', $status));
-	}
-	
-	public function getDroneByAvailable($available)
-	{
-		return response($this->drone->getDroneBy('available', $available));
-	}
+
+    public function getDroneByType($type)
+    {
+        return response($this->drone->getDroneBy('type', $type));
+    }
+
+    public function getSensorsByDroneName($droneName)
+    {
+        return response($this->drone->getSensorsByDroneName($droneName));
+    }
+
+    public function getRoutesByDroneName($droneName)
+    {
+        return response($this->drone->getRoutesByDroneName($droneName));
+    }
+
+    public function getCommandsByDroneName($droneName)
+    {
+        return response($this->drone->getCommandsByDroneName($droneName));
+    }
+
+    public function getDroneByStatus($status)
+    {
+        return response($this->drone->getDroneBy('status', $status));
+    }
+
+    public function getDroneByAvailable($available)
+    {
+        return response($this->drone->getDroneBy('available', $available));
+    }
 
     public function createDrone(CreateDroneRequest $request)
     {

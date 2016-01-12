@@ -24,7 +24,7 @@ class UpdateDroneRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'unique:drones|string|max:50',
+            'name' => 'unique:drones|string|max:50|regex:/^[\S]+$/',
             'status' => 'string|in:active,inactive',
             'type' => 'string|in:aircraft, machine',
             'available' => 'boolean',

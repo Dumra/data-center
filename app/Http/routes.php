@@ -15,23 +15,27 @@ $router->get('/', function () {
     return response('Here will be a web client!');
 });
 
-$router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function() use($router) {	
-	// Drones
-    $router->get('/get/drone/{name?}', 'Drones\DroneController@getDrone');
-	$router->get('/getType/drones/{type}', 'Drones\DroneController@getDroneByType');
-	$router->get('/getSensors/drone/{name}', 'Drones\DroneController@getSensorsByDroneName');
-	$router->get('/getRoutes/drone/{name}', 'Drones\DroneController@getRoutesByDroneName');
-	$router->get('/getCommands/drone/{name}', 'Drones\DroneController@getCommandsByDroneName');
-	$router->get('/getStatus/drones/{status}', 'Drones\DroneController@getDroneByStatus');
-	$router->get('/getAvailable/drones/{available}', 'Drones\DroneController@getDroneByAvailable');
+$router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function () use ($router) {
+    $router->group(['middleware' => 'throttle:5,1'], function () use ($router) {
+        // Drones
+        $router->get('/get/drone/{name?}', 'Drones\DroneController@getDrone');
+        $router->get('/getType/drones/{type}', 'Drones\DroneController@getDroneByType');
+        $router->get('/getSensors/drone/{name}', 'Drones\DroneController@getSensorsByDroneName');
+        $router->get('/getRoutes/drone/{name}', 'Drones\DroneController@getRoutesByDroneName');
+        $router->get('/getCommands/drone/{name}', 'Drones\DroneController@getCommandsByDroneName');
+        $router->get('/getStatus/drones/{status}', 'Drones\DroneController@getDroneByStatus');
+        $router->get('/getAvailable/drones/{available}', 'Drones\DroneController@getDroneByAvailable');
+        // Sensors
+        $router->get('/get/sensor/{name?}', 'Sensors\SensorController@getSensor');
+        $router->get('/getDrone/sensor/{name}', 'Sensors\SensorController@getDroneBySensorName');
+        $router->get('/getSensorValues/sensor/{name}', 'Sensors\SensorController@getSensorValuesBySensorName');
+    });
+    // Drones
     $router->post('/add/drone', 'Drones\DroneController@createDrone');
     $router->put('/update/drone/{name}', 'Drones\DroneController@updateDrone');
     $router->delete('/delete/drone/{name}', 'Drones\DroneController@deleteDrone');
-	// Sensors
-	$router->get('/get/sensor/{name?}', 'Sensor\SensorController@getSensor');
-	$router->get('/getDrone/sensor/{name}', 'Sensor\SensorController@getDroneBySensorName');
-	$router->get('/getSensorValues/sensor/{name}', 'Sensor\SensorController@getSensorValuesBySensorName');
-	$router->post('/add/sensor', 'Sensor\SensorController@createSensor');
-	$router->put('/update/sensor/{name}', 'Sensor\SensorController@updateSensor');
-	$router->delete('/delete/sensor/{name}', 'Sensor\SensorController@deleteSensor');
+    // Sensors
+    $router->post('/add/sensor', 'Sensors\SensorController@createSensor');
+    $router->put('/update/sensor/{name}', 'Sensors\SensorController@updateSensor');
+    $router->delete('/delete/sensor/{name}', 'Sensors\SensorController@deleteSensor');
 });

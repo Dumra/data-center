@@ -11,15 +11,14 @@ class DroneTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('drones')->insert([
-            [
-                'name' => 'Fly1',
-                'type' => 'aircraft'
-            ],
-            [
-                'name' => 'Jeep1',
-                'type' => 'machine'
-            ]
+        factory(App\Data\Models\Drone::class)->create([
+            'name' => 'Fly1',
+            'type' => 'aircraft'
+        ]);
+
+        factory(App\Data\Models\Drone::class)->create([
+            'name' => 'Jeep1',
+            'type' => 'machine'
         ]);
     }
 }

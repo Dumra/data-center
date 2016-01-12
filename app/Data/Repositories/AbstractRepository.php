@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class AbstractRepository
 {
-	protected function checkResult($result)
+	protected function checkResult($result, $errorMsg)
 	{
 		try {
-			if ($result){
+			if (!empty($result->toArray())){
 				return [
 					'success' => true,
 					'data' => $result
@@ -19,7 +19,7 @@ abstract class AbstractRepository
 		} catch (ModelNotFoundException $ex) {
 			return [
 				'success' => false,
-				'msg' => "No found result for this query"];
+				'msg' => $errorMsg];
 		}
 	}
 	
