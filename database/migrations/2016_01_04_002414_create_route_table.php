@@ -19,6 +19,7 @@ class CreateRouteTable extends Migration
             $table->float('height')->nullable();
             $table->enum('direction', ['N', 'E', 'S', 'W', 'NW', 'NE', 'SE', 'SW'])->nullable();
             $table->integer('battery');
+			$table->timestamp('added');
             $table->integer('drone_id')->unsigned();
             $table->foreign('drone_id')
                 ->references('id')

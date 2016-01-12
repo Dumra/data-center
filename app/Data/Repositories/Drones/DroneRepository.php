@@ -91,7 +91,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     public function getSensorsByDroneName($name)
     {
         try {
-            $result = $this->drone->where('name', $name)->firstOrFail()->sensors;
+            $result = $this->findByName($name)->sensors;
             return $this->checkResult($result, "Not one sensors one this drone");
         } catch (ModelNotFoundException $ex) {
             return [
@@ -104,7 +104,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     public function getRoutesByDroneName($name)
     {
         try {
-            $result = $this->drone->where('name', $name)->firstOrFail()->routes;
+            $result = $this->findByName($name)->routes;
             return $this->checkResult($result, "Not one routes with this drone");
         } catch (ModelNotFoundException $ex) {
             return [
@@ -117,7 +117,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     public function getCommandsByDroneName($name)
     {
         try {
-            $result = $this->drone->where('name', $name)->firstOrFail()->commands;
+            $result = $this->findByName($name)->commands;
             return $this->checkResult($result, "Not one commands with this drone");
         } catch (ModelNotFoundException $ex) {
             return [
@@ -130,7 +130,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     private function findBy($field, $value)
     {
         if ($field === 'name') {
-            return $this->drone->where($field, $value)->firstOrFail();
+            return $this->findByName($value);
         }
         return $this->drone->where($field, $value)->get();
     }

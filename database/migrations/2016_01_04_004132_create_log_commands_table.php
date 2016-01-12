@@ -19,6 +19,7 @@ class CreateLogCommandsTable extends Migration
             $table->float('height')->nullable();
             $table->enum('direction', ['N', 'E', 'S', 'W', 'NW', 'NE', 'SE', 'SW'])->nullable();
             $table->integer('drone_id')->unsigned();
+			$table->timestamp('added');
             $table->foreign('drone_id')
                 ->references('id')
                 ->on('drones')

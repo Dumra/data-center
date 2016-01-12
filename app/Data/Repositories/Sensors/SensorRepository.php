@@ -55,7 +55,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
     public function getSensorValuesBySensorName($name)
     {
         try {
-            $result = $this->sensor->where('name', $name)->firstOrFail()->values;
+            $result = $this->findByName($name)->values;
             return $this->checkResult($result, "Not one values for this sensor");
         } catch (ModelNotFoundException $ex) {
             return [
@@ -109,7 +109,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => "No found result for this query"
+                'msg' => "This drone does not exit"
             ];
         }
     }
