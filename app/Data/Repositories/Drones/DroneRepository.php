@@ -135,7 +135,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         return $this->drone->where($field, $value)->get();
     }
 
-    private function findByName($name)
+    public function findByName($name)
     {
         return $this->drone->where('name', $name)->firstOrFail();
     }

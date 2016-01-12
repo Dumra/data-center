@@ -28,7 +28,7 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
             ];
         }
         try {           
-            $result = $this->drone->findByName($name)->command;           
+            $result = $this->drone->findByName($name)->commands;
 			return $this->checkResult($result, "No one route with this drone");
         } catch (ModelNotFoundException $e) {
             return [
@@ -40,9 +40,9 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
 	
 	public function getRouteByDate($droneName, $date, $dateEnd)
 	{
-		try {     
+		try {
 			$dateInterval = $this->getDateRange($date, $dateEnd);
-            $result = $this->drone->findByName($droneName)->commands()->whereBetween('added', $dateInterval);           
+            $result = $this->drone->findByName($droneName)->commands()->whereBetween('added', $dateInterval)->get();
 			return $this->checkResult($result, "No one route with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [

@@ -29,7 +29,19 @@ $factory->define(App\Data\Models\Drone::class, function (Faker\Generator $faker)
 
 $factory->define(App\Data\Models\Sensor::class, function (Faker\Generator $faker) {
     return [
-            'name' => $faker->name,
-            'drone_id' => '1'
+        'name' => $faker->name,
+        'drone_id' => '1'
+    ];
+});
+
+$factory->define(App\Data\Models\Route::class, function (Faker\Generator $faker) {
+    return [
+        'latitude' => 25.52,
+        'longitude' => 35.20,
+        'height' => 4,
+        'direction' => 'N',
+        'battery' => 100,
+        'added' => '1/12/1016 05:00:00',
+        'drone_id' => 1
     ];
 });

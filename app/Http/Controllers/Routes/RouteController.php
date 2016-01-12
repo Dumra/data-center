@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Routes;
 
 use App\Http\Controllers\Controller;
-use App\Data\Repositories\Routes\RouteRepository;
+use App\Data\Repositories\Routes\RouteRepositoryInterface;
 use App\Http\Requests\Routes\UpdateDroneRequest;
 use App\Http\Requests\Routes\CreateRouteRequest;
 
 class RouteController extends Controller
 {
-	private $route;
+	//private $route;
 	
-	public function __construct(RouteRepository $route)
+	public function __construct(RouteRepositoryInterface $route)
 	{
-		$this->route = $route;
+		$this->model = $route;
 	}
 	
-	public function getRouteByDroneName($droneName = null)
+	/*public function getRouteByDroneName($droneName = null)
 	{
 		return response($this->route->getRouteByDroneName($droneName));
-	}
+	}*/
 	
 	public function addRoute(CreateRouteRequest $request)
 	{
