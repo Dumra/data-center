@@ -9,12 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 abstract class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    protected $model;
-
-    protected function getRouteByDroneName($droneName = null)
-    {
-        return response($this->model->getRouteByDroneName($droneName));
-    }
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests; 
+   
 }
