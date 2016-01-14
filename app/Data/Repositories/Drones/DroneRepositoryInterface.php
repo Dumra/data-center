@@ -8,14 +8,11 @@
 
 namespace App\Data\Repositories\Drones;
 
-interface DroneRepositoryInterface
+use App\Data\Repositories\AbstractRepositoryInterface;
+
+interface DroneRepositoryInterface extends AbstractRepositoryInterface
 {
-    public function getDrone($name);
-    public function updateDrone($name, $requestArray);
-    public function destroyDrone($name);
-    public function createDrone($array);
-	public function getDroneBy($type, $value);
-	public function getSensorsByDroneName($name);
-	public function getRoutesByDroneName($name);
-	public function getCommandsByDroneName($name);
+    public function getBy($type, $value);
+
+    public function getDependences($droneName, $dependence);
 }

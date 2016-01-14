@@ -21,7 +21,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         $this->drone = $drone;
     }
 
-    public function getDrone($name)
+    public function get($name)
     {
         // TODO: Implement getDrone() method.
         if (is_null($name)) {
@@ -43,7 +43,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         }
     }
 
-    public function destroyDrone($name)
+    public function delete($name)
     {
         // TODO: Implement destroyDrone() method.
         try {
@@ -57,7 +57,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         }
     }
 
-    public function updateDrone($name, $requestArray)
+    public function update($name, $requestArray)
     {
         try {
             $drone = $this->findByName($name);
@@ -72,7 +72,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         }
     }
 
-    public function createDrone($requestArray)
+    public function create($requestArray)
     {
         $requestArray = $this->prepareToUpdate($requestArray, $this->drone->getFillable());
         $drone = $this->drone->create($requestArray);
@@ -82,43 +82,18 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         ];
     }
 
-    public function getDroneBy($field, $value)
+    public function getBy($field, $value)
     {
         $result = $this->findBy($field, $value);
         return $this->checkResult($result, "Drone where $field = $value does not exist");
     }
 
-    public function getSensorsByDroneName($name)
+    public function getDependences($droneName, $dependence)
     {
+        // TODO: Implement getDependences() method.
         try {
-            $result = $this->findByName($name)->sensors;
-            return $this->checkResult($result, "Not one sensors one this drone");
-        } catch (ModelNotFoundException $ex) {
-            return [
-                'success' => false,
-                'msg' => "Drone with this name does not exit"
-            ];
-        }
-    }
-
-    public function getRoutesByDroneName($name)
-    {
-        try {
-            $result = $this->findByName($name)->routes;
-            return $this->checkResult($result, "Not one routes with this drone");
-        } catch (ModelNotFoundException $ex) {
-            return [
-                'success' => false,
-                'msg' => "Drone with this name does not exit"
-            ];
-        }
-    }
-
-    public function getCommandsByDroneName($name)
-    {
-        try {
-            $result = $this->findByName($name)->commands;
-            return $this->checkResult($result, "Not one commands with this drone");
+            $result = $this->findByName($droneName)->$dependence;
+            return $this->checkResult($result, "Not one $dependence one this drone");
         } catch (ModelNotFoundException $ex) {
             return [
                 'success' => false,

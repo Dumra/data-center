@@ -18,13 +18,13 @@ $router->get('/', function () {
 $router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function () use ($router) {
     $router->group(['middleware' => 'throttle:5,1'], function () use ($router) {
         // Drones
-        $router->get('/get/drone/{name?}', 'Drones\DroneController@getDrone');
-        $router->get('/getType/drones/{type}', 'Drones\DroneController@getDroneByType');
-        $router->get('/getSensors/drone/{name}', 'Drones\DroneController@getSensorsByDroneName');
-        $router->get('/getRoutes/drone/{name}', 'Drones\DroneController@getRoutesByDroneName');
-        $router->get('/getCommands/drone/{name}', 'Drones\DroneController@getCommandsByDroneName');
-        $router->get('/getStatus/drones/{status}', 'Drones\DroneController@getDroneByStatus');
-        $router->get('/getAvailable/drones/{available}', 'Drones\DroneController@getDroneByAvailable');
+        $router->get('/get/drone/{name?}', 'Api\Drones\DroneController@get');
+        $router->get('/getType/drones/{type}', 'Api\Drones\DroneController@getByType');
+        $router->get('/getSensors/drone/{name}', 'Api\Drones\DroneController@getSensors');
+        $router->get('/getRoutes/drone/{name}', 'Api\Drones\DroneController@getRoutes');
+        $router->get('/getCommands/drone/{name}', 'Api\Drones\DroneController@getCommands');
+        $router->get('/getStatus/drones/{status}', 'Api\Drones\DroneController@getByStatus');
+        $router->get('/getAvailable/drones/{available}', 'Api\Drones\DroneController@getByAvailable');
         // Sensors
         $router->get('/get/sensor/{name?}', 'Sensors\SensorController@getSensor');
         $router->get('/getDrone/sensor/{name}', 'Sensors\SensorController@getDroneBySensorName');
@@ -37,9 +37,9 @@ $router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function (
 		$router->get('/get/command/{droneName}/{date}/{date_end?}', 'Commands\CommandController@getCommandByDate');
     });
     // Drones
-    $router->post('/add/drone', 'Drones\DroneController@createDrone');
-    $router->put('/update/drone/{name}', 'Drones\DroneController@updateDrone');
-    $router->delete('/delete/drone/{name}', 'Drones\DroneController@deleteDrone');
+    $router->post('/add/drone', 'Api\Drones\DroneController@createDrone');
+    $router->put('/update/drone/{name}', 'Api\Drones\DroneController@updateDrone');
+    $router->delete('/delete/drone/{name}', 'Api\Drones\DroneController@delete');
     // Sensors
     $router->post('/add/sensor', 'Sensors\SensorController@createSensor');
     $router->put('/update/sensor/{name}', 'Sensors\SensorController@updateSensor');

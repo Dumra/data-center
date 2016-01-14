@@ -16,10 +16,10 @@ class RouteController extends Controller
 		$this->model = $route;
 	}
 	
-	/*public function getRouteByDroneName($droneName = null)
+	public function getRouteByDroneName($droneName = null)
 	{
 		return response($this->route->getRouteByDroneName($droneName));
-	}*/
+	}
 	
 	public function addRoute(CreateRouteRequest $request)
 	{
