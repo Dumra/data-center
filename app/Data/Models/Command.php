@@ -11,7 +11,7 @@ class Command extends Model
 	
     protected $table = 'log_commands';
 
-    protected $fillable = ['latitude', 'longitude', 'height', 'direction', 'drone_id'];
+    protected $fillable = ['latitude', 'longitude', 'height', 'direction', 'added', 'drone_id'];
 	
 	protected $touches = ['drone'];
     /**

@@ -31,5 +31,11 @@ class DataCenterServiceProvider extends ServiceProvider
 		
 		$this->app->bind('App\\Data\\Repositories\\Routes\\RouteRepositoryInterface',
             'App\\Data\\Repositories\\Routes\\RouteRepository');
+
+        $this->app->bind('App\\Data\\Repositories\\Commands\\CommandRepositoryInterface',
+            'App\\Data\\Repositories\\Commands\\CommandRepository');
+
+        $this->app->bind('App\\Data\\Repositories\\SensorValues\\SensorValueRepositoryInterface',
+            'App\\Data\\Repositories\\SensorValues\\SensorValueRepository');
     }
 }

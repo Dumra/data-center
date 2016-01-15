@@ -26,30 +26,37 @@ $router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function (
         $router->get('/getStatus/drones/{status}', 'Api\Drones\DroneController@getByStatus');
         $router->get('/getAvailable/drones/{available}', 'Api\Drones\DroneController@getByAvailable');
         // Sensors
-        $router->get('/get/sensor/{name?}', 'Sensors\SensorController@getSensor');
-        $router->get('/getDrone/sensor/{name}', 'Sensors\SensorController@getDroneBySensorName');
-        $router->get('/getSensorValues/sensor/{name}', 'Sensors\SensorController@getSensorValuesBySensorName');
+        $router->get('/get/sensor/{name?}', 'Api\Sensors\SensorController@get');
+        $router->get('/getDrone/sensor/{name}', 'Api\Sensors\SensorController@getDroneBySensorName');
+        $router->get('/getSensorValues/sensor/{name}', 'Api\Sensors\SensorController@getSensorValuesBySensorName');
 		// Routes
-		$router->get('/get/route/{droneName?}', 'Routes\RouteController@getRouteByDroneName');
-		$router->get('/get/route/{droneName}/{date}/{date_end?}', 'Routes\RouteController@getRouteByDate');
+		$router->get('/get/route/{droneName?}', 'Api\Routes\RouteController@get');
+		$router->get('/get/route/{droneName}/{date}/{date_end?}', 'Api\Routes\RouteController@getRouteByDate');
 		// Commands
-		$router->get('/get/command/{droneName?}', 'Commands\CommandController@getCommandByDroneName');
-		$router->get('/get/command/{droneName}/{date}/{date_end?}', 'Commands\CommandController@getCommandByDate');
+		$router->get('/get/command/{droneName?}', 'Api\Commands\CommandController@get');
+		$router->get('/get/command/{droneName}/{date}/{date_end?}', 'Api\Commands\CommandController@getCommandByDate');
+        // Values
+        $router->get('/get/values/{sensorName?}', 'Api\SensorValues\SensorValuesController@get');
+        $router->get('/get/values/{sensorName}/{date}/{date_end?}', 'Api\SensorValues\SensorValuesController@getValueByDate');
     });
     // Drones
     $router->post('/add/drone', 'Api\Drones\DroneController@createDrone');
     $router->put('/update/drone/{name}', 'Api\Drones\DroneController@updateDrone');
     $router->delete('/delete/drone/{name}', 'Api\Drones\DroneController@delete');
     // Sensors
-    $router->post('/add/sensor', 'Sensors\SensorController@createSensor');
-    $router->put('/update/sensor/{name}', 'Sensors\SensorController@updateSensor');
-    $router->delete('/delete/sensor/{name}', 'Sensors\SensorController@deleteSensor');
+    $router->post('/add/sensor', 'Api\Sensors\SensorController@createSensor');
+    $router->put('/update/sensor/{name}', 'Api\Sensors\SensorController@updateSensor');
+    $router->delete('/delete/sensor/{name}', 'Api\Sensors\SensorController@delete');
 	// Routes
-	$router->post('add/route', 'Routes\RouteController@addRoute');
-	$router->put('/update/route/{id}', 'Routes\RouteController@updateRoute');
-	$router->delete('delete/route/{id}', 'Routes\RouteController@deleteRoute');	
+	$router->post('add/route', 'Api\Routes\RouteController@addRoute');
+	$router->put('/update/route/{id}', 'Api\Routes\RouteController@updateRoute');
+	$router->delete('delete/route/{id}', 'Api\Routes\RouteController@delete');
 	// Commands
-	$router->post('add/command', 'Commands\CommandController@addCommand');
-	$router->put('/update/command/{id}', 'Commands\CommandController@updateCommand');
-	$router->delete('delete/command/{id}', 'Commands\CommandController@deleteCommand');
+	$router->post('add/command', 'Api\Commands\CommandController@addCommand');
+	$router->put('/update/command/{id}', 'Api\Commands\CommandController@updateCommand');
+	$router->delete('delete/command/{id}', 'Api\Commands\CommandController@delete');
+    // Values
+    $router->post('add/value', 'Api\SensorValues\SensorValuesController@createValue');
+    $router->put('/update/value/{id}', 'Api\SensorValues\SensorValuesController@updateValue');
+    $router->delete('delete/value/{id}', 'Api\SensorValues\SensorValuesController@delete');
 });

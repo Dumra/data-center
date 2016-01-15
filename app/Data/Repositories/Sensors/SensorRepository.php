@@ -18,7 +18,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
         $this->drone = $drone;
     }
 
-    public function getSensor($name)
+    public function get($name)
     {
         if (is_null($name)) {
             return [
@@ -65,9 +65,9 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
         }
     }
 
-    public function createSensor($array)
+    public function create($array)
     {
-        $drone = $this->drone->getDroneBy('name', $array['drone_name']);
+        $drone = $this->drone->getBy('name', $array['drone_name']);
         $droneResult = $drone['data'];
         $requestArray = $this->prepareToUpdate($array, $this->sensor->getFillable());
         if (isset($requestArray['drone_id'])) {
@@ -79,11 +79,11 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
                 'data' => $droneCreated];
     }
 
-    public function updateSensor($array, $name)
+    public function update($name, $array)
     {
         try {
             $sensor = $this->findByName($name);
-            $drone = $this->drone->getDroneBy('name', $array['drone_name']);
+            $drone = $this->drone->getBy('name', $array['drone_name']);
             $droneResult = $drone['data'];
             $requestArray = $this->prepareToUpdate($array, $this->sensor->getFillable());
             if (isset($requestArray['drone_id'])) {
@@ -101,7 +101,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
         }
     }
 
-    public function deleteSensor($name)
+    public function delete($name)
     {
         try {
             $sensor = $this->findByName($name);
@@ -114,7 +114,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
         }
     }
 
-    private function findByName($name)
+    public function findByName($name)
     {
         return $this->sensor->where('name', $name)->firstOrFail();
     }

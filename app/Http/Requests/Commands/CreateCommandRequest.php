@@ -14,8 +14,8 @@ class CreateCommandRequest extends Request
     public function rules()
     {
         return [
-            'latitude' => 'required|regex:/^[+-]?\d+\.\d+, ?[+-]?\d+\.\d+$/',
-            'longitude' => 'required|regex:/^[+-]?\d+\.\d+, ?[+-]?\d+\.\d+$/',
+            'latitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+            'longitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
 			'added' => 'required|date',

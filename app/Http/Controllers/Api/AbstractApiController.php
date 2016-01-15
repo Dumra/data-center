@@ -20,7 +20,7 @@ abstract class AbstractApiController extends Controller
 
     protected function update($requestArray, $param)
     {
-        return response($this->model->update($requestArray->all(), $param));
+        return response($this->model->update($param, $requestArray->all()));
     }
 
     protected function delete($param)

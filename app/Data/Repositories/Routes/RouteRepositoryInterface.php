@@ -2,11 +2,10 @@
 
 namespace App\Data\Repositories\Routes;
 
-interface RouteRepositoryInterface
+use App\Data\Repositories\AbstractCrudInterface;
+
+interface RouteRepositoryInterface extends AbstractCrudInterface
 {
-	public function getRouteByDroneName($name);
-	public function getRouteByDate($droneName, $date, $dateEnd);
-	public function createRoute($array);
-	public function updateRoute($array, $id);
-	public function deleteRoute($id);
+    public function getRouteByDate($droneName, $date, $dateEnd);
+
 }

@@ -2,12 +2,12 @@
 
 namespace App\Data\Repositories\Sensors;
 
-interface SensorRepositoryInterface
+use App\Data\Repositories\AbstractCrudInterface;
+
+interface SensorRepositoryInterface extends AbstractCrudInterface
 {
-	public function getSensor($name);
-	public function getDroneBySensorName($name);
-	public function getSensorValuesBySensorName($name);
-	public function createSensor($array);
-	public function updateSensor($array, $name);
-	public function deleteSensor($name);
+    public function getDroneBySensorName($name);
+
+    public function getSensorValuesBySensorName($name);
+
 }

@@ -16,7 +16,7 @@ class DroneController extends AbstractApiController
 
     public function getByType($type)
     {
-        return response($this->model->getDroneBy('type', $type));
+        return response($this->model->getBy('type', $type));
     }
 
     public function getSensors($droneName)
@@ -36,12 +36,12 @@ class DroneController extends AbstractApiController
 
     public function getByStatus($status)
     {
-        return response($this->model->getDroneBy('status', $status));
+        return response($this->model->getBy('status', $status));
     }
 
-    public function geteByAvailable($available)
+    public function getByAvailable($available)
     {
-        return response($this->model->getDroneBy('available', $available));
+        return response($this->model->getBy('available', $available));
     }
 
     public function createDrone(CreateDroneRequest $request)

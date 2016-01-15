@@ -8,9 +8,9 @@
 
 namespace App\Data\Repositories\Drones;
 
-use App\Data\Repositories\AbstractRepositoryInterface;
+use App\Data\Repositories\AbstractCrudInterface;
 
-interface DroneRepositoryInterface extends AbstractRepositoryInterface
+interface DroneRepositoryInterface extends AbstractCrudInterface
 {
     public function getBy($type, $value);
 

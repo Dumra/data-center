@@ -15,6 +15,7 @@ class CreateSensorsValuesTable extends Migration
         Schema::create('sensors_values', function (Blueprint $table) {
             $table->increments('id');
             $table->float('value');
+            $table->timestamp('added');
             $table->integer('sensor_id')->unsigned();
             $table->foreign('sensor_id')
                 ->references('id')

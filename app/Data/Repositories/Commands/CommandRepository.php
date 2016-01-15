@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Data\Repositories\Routes;
+namespace App\Data\Repositories\Commands;
 
-use App\Data\Models\Commands;
+use App\Data\Models\Command;
 use App\Data\Repositories\AbstractRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Data\Repositories\Drones\DroneRepositoryInterface;
-use App\Utilities\DateUtility;
 
-class RouteRepository extends AbstractRepository implements RouteRepositoryInterface
+class CommandRepository extends AbstractRepository implements CommandRepositoryInterface
 {
 	private $command;
 	private $drone;
 	
-	public function __construct(Commands $command, DroneRepositoryInterface $drone)
+	public function __construct(Command $command, DroneRepositoryInterface $drone)
 	{
 		$this->command = $command;
 		$this->drone = $drone;
 	}
 
-	public function getRouteByDroneName($name)
+	public function get($name)
 	{
 		 if (is_null($name)) {
             return [
@@ -29,7 +28,7 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         }
         try {           
             $result = $this->drone->findByName($name)->commands;
-			return $this->checkResult($result, "No one route with this drone");
+			return $this->checkResult($result, "No one command with this drone");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
@@ -38,12 +37,12 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         }
 	}
 	
-	public function getRouteByDate($droneName, $date, $dateEnd)
+	public function getCommandByDate($droneName, $date, $dateEnd)
 	{
 		try {
 			$dateInterval = $this->getDateRange($date, $dateEnd);
             $result = $this->drone->findByName($droneName)->commands()->whereBetween('added', $dateInterval)->get();
-			return $this->checkResult($result, "No one route with this drone by this date");
+			return $this->checkResult($result, "No one command with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
@@ -52,44 +51,43 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         }
 	}
 	
-	public function createRoute($array)
+	public function create($array)
 	{
-		$drone = $this->drone->getDroneBy('name', $array['drone_name']);
+		$drone = $this->drone->getBy('name', $array['drone_name']);
         $droneResult = $drone['data'];
         $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());
         if (isset($requestArray['drone_id'])) {
             unset($requestArray['drone_id']);
         }
         $requestArray['drone_id'] = $droneResult->id;
-		$requestArray['added'] = strtotime($requestArray['added']);
-        $droneCreated = $droneResult->sensors()->save($this->command->create($requestArray));
+        $droneCreated = $droneResult->commands()->save($this->command->create($requestArray));
         return ['success' => true,
                 'data' => $droneCreated];
 	}
 	
-	public function updateRoute($array, $id)
+	public function update($id, $array)
 	{
 		try {
-            $route = $this->findById($id);
-            $drone = $this->drone->getDroneBy('name', $array['drone_name']);
+            $command = $this->findById($id);
+            $drone = $this->drone->getBy('name', $array['drone_name']);
             $droneResult = $drone['data'];
             $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());
             if (isset($requestArray['drone_id'])) {
                 unset($requestArray['drone_id']);
             }
             $requestArray['drone_id'] = $droneResult->id;
-            $route->fill($requestArray);
-            return ['success' => $route->save(),
-                    'data' => $route];
+			$command->fill($requestArray);
+            return ['success' => $command->save(),
+                    'data' => $command];
         } catch (ModelNotFoundException $ex) {
             return [
                 'success' => false,
-                'msg' => "This route does not exit"
+                'msg' => "This command does not exit"
             ];
         }
 	}
 	
-	public function deleteRoute($id)
+	public function delete($id)
 	{
 		 try {
             $route = $this->findById($id);
@@ -97,25 +95,14 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => "This route does not exit"
+                'msg' => "This command does not exit"
             ];
         }
 	}
 
 	private function findById($id)
 	{
-		$this->route->firstOrFail($id);
-	}
-	
-	private function getDateRange($date, $dateEnd)
-	{
-		if (is_null($dateEnd))
-		{
-			return DateUtility::getDateRange($date);
-		}
-		$start = DateUtility::getDateRange($date);
-		$end = DateUtility::getDateRange($dateEnd);
-		return [$start[0], $end[0]];
+		return $this->command->where('id', $id)->firstOrFail();
 	}
 
 }

@@ -14,8 +14,8 @@ class UpdateRouteRequest extends Request
     public function rules()
     {
         return [
-            'latitude' => 'regex:/^[+-]?\d+\.\d+, ?[+-]?\d+\.\d+$/',
-            'longitude' => 'regex:/^[+-]?\d+\.\d+, ?[+-]?\d+\.\d+$/',
+            'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+            'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',
 			'battery' => 'integer|between:0,100',

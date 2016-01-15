@@ -2,11 +2,10 @@
 
 namespace App\Data\Repositories\Commands;
 
-interface CommandRepositoryInterface
+use App\Data\Repositories\AbstractCrudInterface;
+
+interface CommandRepositoryInterface extends AbstractCrudInterface
 {
-	public function getCommandByDroneName($name);
-	public function getCommandeByDate($droneName, $date, $dateEnd);
-	public function createCommand($array);
-	public function updateCommand($array, $id);
-	public function deleteCommand($id);
+    public function getCommandByDate($droneName, $date, $dateEnd);
+
 }

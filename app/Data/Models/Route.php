@@ -11,7 +11,7 @@ class Route extends Model
 	
     protected $table = 'routes';
 
-    protected $fillable = ['latitude', 'longitude', 'height', 'direction', 'battery', 'drone_id'];
+    protected $fillable = ['latitude', 'longitude', 'height', 'direction', 'battery', 'added', 'drone_id'];
 	
 	protected $touches = ['drone'];
     /**

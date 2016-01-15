@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class RouteTableSeeder extends Seeder
+class CommandTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,34 +11,31 @@ class RouteTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Data\Models\Route::class)->create([
+        factory(App\Data\Models\Command::class)->create([
             'latitude' => 25.52,
             'longitude' => 35.20,
             'height' => 4,
             'direction' => 'N',
-            'battery' => 100,
             'added' => '2016-01-28 05:00:00',
             'drone_id' => 1
         ]);
 
-        factory(App\Data\Models\Route::class)->create([
-            'latitude' => 8,
-            'longitude' => 24,
-            'height' => 5,
-            'direction' => 'S',
-            'battery' => 50,
-            'added' => '2016-01-28 05:00:00',
-            'drone_id' => 1
-        ]);
-
-        factory(App\Data\Models\Route::class)->create([
+        factory(App\Data\Models\Command::class)->create([
             'latitude' => 38.52,
             'longitude' => 42.20,
             'height' => 0,
             'direction' => 'S',
-            'battery' => 50,
             'added' => '2016-01-12 07:00:00',
             'drone_id' => 2
+        ]);
+
+        factory(App\Data\Models\Command::class)->create([
+            'latitude' => 8,
+            'longitude' => 9,
+            'height' => 8,
+            'direction' => 'W',
+            'added' => '2016-01-15 07:00:00',
+            'drone_id' => 1
         ]);
     }
 }

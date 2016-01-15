@@ -3,6 +3,7 @@
 namespace App\Data\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Utilities\DateUtility;
 
 abstract class AbstractRepository
 {
@@ -33,4 +34,15 @@ abstract class AbstractRepository
         }
         return $resultArray;
     }
+
+	protected function getDateRange($date, $dateEnd)
+	{
+		if (is_null($dateEnd))
+		{
+			return DateUtility::getDateRange($date);
+		}
+		$start = DateUtility::getDateRange($date);
+		$end = DateUtility::getDateRange($dateEnd);
+		return [$start[0], $end[0]];
+	}
 }

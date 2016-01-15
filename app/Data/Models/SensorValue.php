@@ -20,7 +20,7 @@ class SensorValue extends Model
 	
     protected $table = 'sensors_values';
 
-    protected $fillable = ['value', 'sensor_id'];
+    protected $fillable = ['value', 'added', 'sensor_id'];
 
     public function sensor()
     {

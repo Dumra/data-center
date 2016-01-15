@@ -9,7 +9,7 @@
 namespace App\Data\Repositories;
 
 
-interface AbstractRepositoryInterface
+interface AbstractCrudInterface
 {
     public function get($name);
 
