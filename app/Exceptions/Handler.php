@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +54,15 @@ class Handler extends ExceptionHandler
                 'msg' => 'Too many requests. Slow your roll! Only 5 request within 1 minute'
             ]);
         }
+		else if ($e instanceof TokenExpiredException) {
+			return response()->json(['token_expired'], $e->getStatusCode());
+		} else if ($e instanceof TokenInvalidException) {
+			return response()->json(['token_invalid'], $e->getStatusCode());
+		}
+		else if ($e instanceof JWTException) {
+			return response()->json(['could_not_create_token'], $e->getStatusCode());
+		}
+
 
         return parent::render($request, $e);
     }
