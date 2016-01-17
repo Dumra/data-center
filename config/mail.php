@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'postmaster@mail.data-center.in.ua', 'name' => 'Data Center'],
 
     /*
     |--------------------------------------------------------------------------

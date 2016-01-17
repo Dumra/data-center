@@ -5,46 +5,59 @@ namespace App\Data\Repositories\Users;
 use App\Data\Repositories\AbstractRepository;
 use App\Data\Models\User;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Contracts\Hashing\Hasher;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-	public function __construct(User $user)
-	{
-		$this->model = $user;
-	}
+    protected $encrypter;
 
-	public function create($array)
-	{
-		
-	}
+    public function __construct(User $user, Hasher $encrypter)
+    {
+        $this->model = $user;
+        $this->encrypter = $encrypter;
+    }
 
-	public function delete($name)
-	{
-		
-	}
+    public function create($array)
+    {
 
-	public function get($name)
-	{
-		
-	}
+    }
 
-	public function getCredsForMailing(Encrypter $encrypter)
-	{
-		$users = $this->model->get(['name', 'email', 'password']);
-		return $this->decryptPasses($users, $encrypter)->toArray();
-	}
+    public function delete($name)
+    {
 
-	public function update($name, $requestArray)
-	{
-		
-	}
-	
-	private function decryptPasses($users, $encrypter)
-	{
-		return $users->map(function ($user){
-			$user->password = $encrypter->decrypt($user->password);
-			return $user;
-		});
-	}
+    }
+
+    public function get($name)
+    {
+
+    }
+
+    public function getCredsForMailing()
+    {
+        return $users = $this->model->get(['name', 'email', 'password']);
+        //return $this->decryptPasses($users);
+    }
+
+    public function encryptPasses()
+    {
+        $users = User::all();
+        foreach ($users as $user){
+            $user->password = $this->encrypter->make($user->password);
+            $user->save();
+        }
+    }
+
+    public function update($name, $requestArray)
+    {
+
+    }
+
+    private function decryptPasses($users)
+    {
+        return $users->map(function ($user) {
+            $user->password = $this->encrypter->decrypt($user->password);
+            return $user;
+        });
+    }
 
 }

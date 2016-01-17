@@ -11,7 +11,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-       /* factory(App\Data\Models\User::class)->create([
+        factory(App\Data\Models\User::class)->create([
             'name' => 'barchinsky',
             'email' => 'barchinsky@gmail.com',			
         ]);
@@ -39,16 +39,13 @@ class UserTableSeeder extends Seeder
 		factory(App\Data\Models\User::class)->create([
             'name' => 'roma.oncha',
             'email' => 'roma.oncha@gmail.com',			
-        ]);*/
+        ]);
 		
 		factory(App\Data\Models\User::class)->create([
             'name' => 'd.shuliakov',
-            'email' => 'd.shuliakov@gmail.com',			
+            'email' => 'd.shuliakov@gmail.com',
+            'password' => '123456'
         ]);
-		
-		factory(App\Data\Models\User::class)->create([
-            'name' => 'shuliakov',
-            'email' => 'dshulyakov@geeksforless.net',			
-        ]);
+
     }
 }

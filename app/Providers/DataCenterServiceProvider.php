@@ -41,7 +41,7 @@ class DataCenterServiceProvider extends ServiceProvider
 		 $this->app->bind('App\\Data\\Repositories\\Users\\UserRepositoryInterface',
             'App\\Data\\Repositories\\Users\\UserRepository');
 		
-		$this->app->bind('App\\Data\\Services\\MailService\\MailSenderInterface',
-            'App\\Data\\Services\\MailService\\MailSender');
+		$this->app->bind('App\\Services\\MailService\\MailSenderInterface',
+            'App\\Services\\MailService\\MailSender');
     }
 }

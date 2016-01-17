@@ -15,7 +15,7 @@ $router->get('/', function () {
     return response('Here will be a web client!');
 });
 
-$router->group(['domain' => 'api.data-center.dev', 'prefix' => 'v1'], function () use ($router) {
+$router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () use ($router) {
 	$router->group(['middleware' => 'jwt.auth'], function () use ($router) {
 		$router->group(['middleware' => 'throttle:5,1'], function () use ($router) {
 			// Drones
