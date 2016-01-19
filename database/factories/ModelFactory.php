@@ -40,7 +40,7 @@ $factory->define(App\Data\Models\Route::class, function (Faker\Generator $faker)
         'height' => 4,
         'direction' => 'N',
         'battery' => 100,
-        'added' => '1/12/1016 05:00:00',
+        'added' => '1/12/2016 05:00:00',
         'drone_id' => 1
     ];
 });
@@ -52,7 +52,7 @@ $factory->define(App\Data\Models\Command::class, function (Faker\Generator $fake
 		'description' => 'Here will be some description',
         'height' => 4,
         'direction' => 'N',
-        'added' => '1/12/1016 05:00:00',
+        'added' => '1/12/2016 05:00:00',
         'drone_id' => 1
     ];
 });
@@ -62,6 +62,7 @@ $factory->define(App\Data\Models\SensorValue::class, function (Faker\Generator $
         'value' => 25.52,
 		'latitude' => 28.52,
         'longitude' => 89.20,
+        'added' => '1/12/2016 05:00:00',
         'sensor_id' => 1
     ];
 });

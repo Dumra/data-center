@@ -24,7 +24,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     public function get($id)
     {
         // TODO: Implement getDrone() method.
-        if (is_null($name)) {
+        if (is_null($id)) {
             return [
                 'success' => true,
                 'data' => $this->drone->all()
@@ -47,7 +47,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     {
         // TODO: Implement destroyDrone() method.
         try {
-            $drone = $this->findBy($id);
+            $drone = $this->findById($id);
             return ['success' => $drone->delete()];
         } catch (ModelNotFoundException $e) {
             return [
@@ -60,7 +60,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
     public function update($id, $requestArray)
     {
         try {
-            $drone = $this->findBy($id);
+            $drone = $this->findById($id);
             $requestArray = $this->prepareToUpdate($requestArray, $this->drone->getFillable());
             $drone->fill($requestArray);
             return ['success' => $drone->save()];

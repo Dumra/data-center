@@ -13,7 +13,7 @@ class AddDescriptionToCommandTable extends Migration
     public function up()
     {
         Schema::table('log_commands', function (Blueprint $table) {
-            $table->string('name', 255)->after('id');
+            $table->string('description', 255)->after('id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddDescriptionToCommandTable extends Migration
     public function down()
     {
         Schema::table('log_commands', function (Blueprint $table) {
-            //
+            $table->dropColumn('description');
         });
     }
 }

@@ -26,7 +26,8 @@ class AddCoordinatesToValuesSensorTable extends Migration
     public function down()
     {
         Schema::table('sensors_values', function (Blueprint $table) {
-            //
+            $table->dropColumn('longitude');
+            $table->dropColumn('latitude');
         });
     }
 }

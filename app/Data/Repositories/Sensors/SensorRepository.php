@@ -20,7 +20,7 @@ class SensorRepository extends AbstractRepository implements SensorRepositoryInt
 
     public function get($id)
     {
-        if (is_null($name)) {
+        if (is_null($id)) {
             return [
                 'success' => true,
                 'data' => $this->sensor->all()
