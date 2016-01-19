@@ -14,14 +14,14 @@ class SensorController extends AbstractApiController
         $this->model = $sensor;
     }
 
-    public function getDroneBySensorName($name)
+    public function getDroneBySensorName($id)
     {
-        return response($this->model->getDroneBySensorName($name));
+        return response($this->model->getDroneBySensorName($id));
     }
 
-    public function getSensorValuesBySensorName($name)
+    public function getSensorValuesBySensorName($id)
     {
-        return response($this->model->getSensorValuesBySensorName($name));
+        return response($this->model->getSensorValuesBySensorName($id));
     }
 
     public function createSensor(CreateSensorRequest $request)
@@ -29,8 +29,8 @@ class SensorController extends AbstractApiController
         return $this->create($request);
     }
 
-    public function updateSensor(UpdateSensorRequest $request, $name)
+    public function updateSensor(UpdateSensorRequest $request, $id)
     {
-        return $this->update($request, $name);
+        return $this->update($request, $id);
     }
 }

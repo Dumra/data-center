@@ -6,6 +6,6 @@ use App\Data\Repositories\AbstractCrudInterface;
 
 interface CommandRepositoryInterface extends AbstractCrudInterface
 {
-    public function getCommandByDate($droneName, $date, $dateEnd);
+    public function getCommandByDate($droneId, $date, $dateEnd);
 
 }

@@ -15,9 +15,11 @@ class SensorValuesUpdateRequest extends Request
     public function rules()
     {
         return [
+			'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+            'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'value' => 'regex:/^\d*(\.\d{2})?$/',
             'added' => 'date',
-            'sensor_name' => 'exists:sensors,name'
+            'sensor_id' => 'exists:sensors,id'
         ];
     }
 }

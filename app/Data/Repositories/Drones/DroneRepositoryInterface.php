@@ -14,5 +14,5 @@ interface DroneRepositoryInterface extends AbstractCrudInterface
 {
     public function getBy($type, $value);
 
-    public function getDependences($droneName, $dependence);
+    public function getDependences($droneId, $dependence);
 }

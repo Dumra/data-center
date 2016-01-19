@@ -20,7 +20,7 @@ class CreateRouteRequest extends Request
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',
 			'battery' => 'required|integer|between:0,100',
 			'added' => 'required|date',
-			'drone_name' => 'required|exists:drones,name'
+			'drone_id' => 'required|exists:drones,id'
         ];
     }
 }

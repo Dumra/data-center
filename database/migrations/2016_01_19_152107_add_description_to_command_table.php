@@ -13,7 +13,7 @@ class AddDescriptionToCommandTable extends Migration
     public function up()
     {
         Schema::table('log_commands', function (Blueprint $table) {
-            //
+            $table->string('name', 255)->after('id');
         });
     }
 

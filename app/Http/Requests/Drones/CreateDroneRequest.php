@@ -15,7 +15,7 @@ class CreateDroneRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:drones|string|max:50|regex:/^[\S]+$/',
+            'name' => 'required|string|max:50|regex:/^[\S]+$/',
             'status' => 'string|in:active,inactive',
             'type' => 'required|string|in:aircraft, machine',
             'available' => 'boolean',

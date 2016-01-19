@@ -49,6 +49,7 @@ $factory->define(App\Data\Models\Command::class, function (Faker\Generator $fake
     return [
         'latitude' => 25.52,
         'longitude' => 35.20,
+		'description' => 'Here will be some description',
         'height' => 4,
         'direction' => 'N',
         'added' => '1/12/1016 05:00:00',
@@ -59,6 +60,8 @@ $factory->define(App\Data\Models\Command::class, function (Faker\Generator $fake
 $factory->define(App\Data\Models\SensorValue::class, function (Faker\Generator $faker) {
     return [
         'value' => 25.52,
+		'latitude' => 28.52,
+        'longitude' => 89.20,
         'sensor_id' => 1
     ];
 });

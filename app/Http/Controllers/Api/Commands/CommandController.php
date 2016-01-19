@@ -24,8 +24,8 @@ class CommandController extends AbstractApiController
 		return $this->update($request, $id);
 	}
 	
-	public function getCommandByDate($droneName, $date, $dateEnd = null)
+	public function getCommandByDate($droneId, $date, $dateEnd = null)
 	{
-		return response($this->model->getCommandByDate($droneName, $date, $dateEnd));
+		return response($this->model->getCommandByDate($droneId, $date, $dateEnd));
 	}
 }

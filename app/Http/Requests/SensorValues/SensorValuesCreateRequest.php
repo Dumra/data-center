@@ -15,9 +15,11 @@ class SensorValuesCreateRequest extends Request
     public function rules()
     {
         return [
+			'latitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+            'longitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'value' => 'required|regex:/^\d*(\.\d{2})?$/',
             'added' => 'required|date',
-            'sensor_name' => 'required|exists:sensors,name'
+            'sensor_id' => 'required|exists:sensors,id'
         ];
     }
 }

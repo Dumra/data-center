@@ -11,11 +11,11 @@ namespace App\Data\Repositories;
 
 interface AbstractCrudInterface
 {
-    public function get($name);
+    public function get($id);
 
-    public function update($name, $requestArray);
+    public function update($id, $requestArray);
 
-    public function delete($name);
+    public function delete($id);
 
     public function create($array);
 }

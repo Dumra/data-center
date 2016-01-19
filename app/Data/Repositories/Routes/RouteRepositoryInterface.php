@@ -6,6 +6,6 @@ use App\Data\Repositories\AbstractCrudInterface;
 
 interface RouteRepositoryInterface extends AbstractCrudInterface
 {
-    public function getRouteByDate($droneName, $date, $dateEnd);
+    public function getRouteByDate($id, $date, $dateEnd);
 
 }

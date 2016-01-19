@@ -18,50 +18,47 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         $this->drone = $drone;
     }
 
-    public function get($name)
+    public function get($id)
     {
-        if (is_null($name)) {
+        if (is_null($id)) {
             return [
                 'success' => true,
                 'data' => $this->route->all()
             ];
         }
         try {
-            $result = $this->drone->findByName($name)->routes;
+            $drone = $this->drone->get($id);
+			$result = $drone['data']->routes;
             return $this->checkResult($result, "No one route with this drone");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Drone with this name does not exist'
+                'msg' => 'Drone with this id does not exist'
             ];
         }
     }
 
-    public function getRouteByDate($droneName, $date, $dateEnd)
+    public function getRouteByDate($droneId, $date, $dateEnd)
     {
         try {
             $dateInterval = $this->getDateRange($date, $dateEnd);
             //return $dateInterval;
-            $result = $this->drone->findByName($droneName)->routes()->whereBetween('added', $dateInterval)->get();
+			$droneResult = $this->drone->get($droneId);
+            $result = $droneResult['data']->findById($droneId)->routes()->whereBetween('added', $dateInterval)->get();
             return $this->checkResult($result, "No one route with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Drone with this name does not exist'
+                'msg' => 'Drone with this id does not exist'
             ];
         }
     }
 
     public function create($array)
     {
-        $drone = $this->drone->getBy('name', $array['drone_name']);
-        $droneResult = $drone['data'];
-        $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());
-        if (isset($requestArray['drone_id'])) {
-            unset($requestArray['drone_id']);
-        }
-        $requestArray['drone_id'] = $droneResult->id;
-        $droneCreated = $droneResult->routes()->save($this->route->create($requestArray));
+		$drone = $this->drone->get($array['drone_id']);            
+        $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());       
+        $droneCreated = $drone['data']->routes()->save($this->route->create($requestArray));
         return [
             'success' => true,
             'data' => $droneCreated
@@ -71,14 +68,8 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
     public function update($id, $array)
     {
         try {
-            $route = $this->findById($id);
-            $drone = $this->drone->getBy('name', $array['drone_name']);
-            $droneResult = $drone['data'];
-            $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());
-            if (isset($requestArray['drone_id'])) {
-                unset($requestArray['drone_id']);
-            }
-            $requestArray['drone_id'] = $droneResult->id;
+            $route = $this->findById($id);           
+            $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());           
             $route->fill($requestArray);
             return [
                 'success' => $route->save(),
@@ -107,7 +98,7 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
 
     private function findById($id)
     {
-        return $this->route->where('id', $id)->firstOrFail();
+        return $this->route->findOrFail($id);
     }
 
 }

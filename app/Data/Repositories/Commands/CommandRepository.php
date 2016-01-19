@@ -18,49 +18,46 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
 		$this->drone = $drone;
 	}
 
-	public function get($name)
+	public function get($id)
 	{
-		 if (is_null($name)) {
+		 if (is_null($id)) {
             return [
                 'success' => true,
                 'data' => $this->command->all()
             ];
         }
-        try {           
-            $result = $this->drone->findByName($name)->commands;
+        try {   
+			$drone = $this->drone->get($id);
+            $result = $drone['data']->commands;
 			return $this->checkResult($result, "No one command with this drone");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Drone with this name does not exist'
+                'msg' => 'Drone with this id does not exist'
             ];
         }
 	}
 	
-	public function getCommandByDate($droneName, $date, $dateEnd)
+	public function getCommandByDate($droneId, $date, $dateEnd)
 	{
 		try {
 			$dateInterval = $this->getDateRange($date, $dateEnd);
-            $result = $this->drone->findByName($droneName)->commands()->whereBetween('added', $dateInterval)->get();
+			$drone = $this->drone->get($droneId);
+            $result = $drone['data']->findById($droneId)->commands()->whereBetween('added', $dateInterval)->get();
 			return $this->checkResult($result, "No one command with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Drone with this name does not exist'
+                'msg' => 'Drone with this id does not exist'
             ];
         }
 	}
 	
 	public function create($array)
 	{
-		$drone = $this->drone->getBy('name', $array['drone_name']);
-        $droneResult = $drone['data'];
-        $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());
-        if (isset($requestArray['drone_id'])) {
-            unset($requestArray['drone_id']);
-        }
-        $requestArray['drone_id'] = $droneResult->id;
-        $droneCreated = $droneResult->commands()->save($this->command->create($requestArray));
+		$drone = $this->drone->get($array['drone_id']);  		     
+        $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());       
+        $droneCreated = $drone['data']->commands()->save($this->command->create($requestArray));
         return ['success' => true,
                 'data' => $droneCreated];
 	}
@@ -68,14 +65,8 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
 	public function update($id, $array)
 	{
 		try {
-            $command = $this->findById($id);
-            $drone = $this->drone->getBy('name', $array['drone_name']);
-            $droneResult = $drone['data'];
-            $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());
-            if (isset($requestArray['drone_id'])) {
-                unset($requestArray['drone_id']);
-            }
-            $requestArray['drone_id'] = $droneResult->id;
+            $command = $this->findById($id);         
+            $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());           
 			$command->fill($requestArray);
             return ['success' => $command->save(),
                     'data' => $command];
@@ -102,7 +93,7 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
 
 	private function findById($id)
 	{
-		return $this->command->where('id', $id)->firstOrFail();
+		return $this->command->findOrFail($id);
 	}
 
 }

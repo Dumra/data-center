@@ -24,8 +24,8 @@ class RouteController extends AbstractApiController
         return $this->update($request, $id);
     }
 
-    public function getRouteByDate($droneName, $date, $dateEnd = null)
+    public function getRouteByDate($id, $date, $dateEnd = null)
     {
-        return response($this->model->getRouteByDate($droneName, $date, $dateEnd));
+        return response($this->model->getRouteByDate($id, $date, $dateEnd));
     }
 }

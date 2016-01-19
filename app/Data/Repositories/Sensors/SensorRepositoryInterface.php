@@ -6,8 +6,8 @@ use App\Data\Repositories\AbstractCrudInterface;
 
 interface SensorRepositoryInterface extends AbstractCrudInterface
 {
-    public function getDroneBySensorName($name);
+    public function getDroneBySensorName($id);
 
-    public function getSensorValuesBySensorName($name);
+    public function getSensorValuesBySensorName($id);
 
 }

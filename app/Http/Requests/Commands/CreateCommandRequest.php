@@ -16,10 +16,11 @@ class CreateCommandRequest extends Request
         return [
             'latitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'longitude' => 'required|regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+			'description' => 'required|string|max:250',
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
 			'added' => 'required|date',
-			'drone_name' => 'required|exists:drones,name'
+			'drone_id' => 'required|exists:drones,id'
         ];
     }
 }

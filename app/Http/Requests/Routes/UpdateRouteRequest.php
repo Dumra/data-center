@@ -20,7 +20,7 @@ class UpdateRouteRequest extends Request
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',
 			'battery' => 'integer|between:0,100',
 			'added' => 'date',
-			'drone_name' => 'exists:drones,name'
+			'drone_id' => 'exists:drones,id'
         ];
     }
 }

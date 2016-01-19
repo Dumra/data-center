@@ -20,9 +20,9 @@ class SensorValuesController extends AbstractApiController
         $this->model = $sensorVal;
     }
 
-    public function getValueByDate($droneName, $date, $dateEnd = null)
+    public function getValueByDate($sensorId, $date, $dateEnd = null)
     {
-        return response($this->model->getByDate($droneName, $date, $dateEnd));
+        return response($this->model->getByDate($sensorId, $date, $dateEnd));
     }
 
     public function createValue(SensorValuesCreateRequest $request)
@@ -30,8 +30,8 @@ class SensorValuesController extends AbstractApiController
         return $this->create($request);
     }
 
-    public function updateValue(SensorValuesUpdateRequest $request, $name)
+    public function updateValue(SensorValuesUpdateRequest $request, $id)
     {
-        return $this->update($request, $name);
+        return $this->update($request, $id);
     }
 }

@@ -14,8 +14,8 @@ class CreateSensorRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:sensors|string|max:50|regex:/^[\S]+$/',
-			'drone_name' => 'required|exists:drones,name'
+            'name' => 'required|string|max:50|regex:/^[\S]+$/',
+			'drone_id' => 'required|exists:drones,id'
         ];
     }
 }

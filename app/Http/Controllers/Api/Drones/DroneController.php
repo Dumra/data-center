@@ -19,19 +19,19 @@ class DroneController extends AbstractApiController
         return response($this->model->getBy('type', $type));
     }
 
-    public function getSensors($droneName)
+    public function getSensors($droneId)
     {
-        return response($this->model->getDependences($droneName, 'sensors'));
+        return response($this->model->getDependences($droneId, 'sensors'));
     }
 
-    public function getRoutes($droneName)
+    public function getRoutes($droneId)
     {
-        return response($this->model->getDependences($droneName, 'routes'));
+        return response($this->model->getDependences($droneId, 'routes'));
     }
 
-    public function getCommands($droneName)
+    public function getCommands($droneId)
     {
-        return response($this->model->getDependences($droneName, 'commands'));
+        return response($this->model->getDependences($droneId, 'commands'));
     }
 
     public function getByStatus($status)
@@ -49,9 +49,9 @@ class DroneController extends AbstractApiController
         return $this->create($request);
     }
 
-     public function updateDrone(UpdateDroneRequest $request, $name)
+     public function updateDrone(UpdateDroneRequest $request, $id)
      {
-         return $this->update($request, $name);
+         return $this->update($request, $id);
      }
 
 }

@@ -24,68 +24,59 @@ class SensorValueRepository extends AbstractRepository implements SensorValueRep
         $this->sensor = $sensor;
     }
 
-    public function get($name)
+    public function get($id)
     {
-        if (is_null($name)) {
+        if (is_null($id)) {
             return [
                 'success' => true,
                 'data' => $this->sensorValues->all()
             ];
         }
         try {
-            $result = $this->sensor->findByName($name)->values;
+			$resultSensor =  $this->sensor->get($id);
+            $result = $resultSensor['data']->values;
             return $this->checkResult($result, "No one value with this sensor");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Sensor with this name does not exist'
+                'msg' => 'Sensor with this id does not exist'
             ];
         }
     }
 
-    public function getByDate($sensorName, $date, $dateEnd)
+    public function getByDate($sensorId, $date, $dateEnd)
     {
         try {
             $dateInterval = $this->getDateRange($date, $dateEnd);
-            $resultSensor =  $this->sensor->get($sensorName);
+            $resultSensor =  $this->sensor->get($sensorId);
             $result = $resultSensor['data']->values()->whereBetween('added', $dateInterval)->get();
             return $this->checkResult($result, "No one values with this drone by this sensor");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Sensor with this name does not exist'
+                'msg' => 'Sensor with this id does not exist'
             ];
         }
     }
 
     public function create($array)
     {
-        $drone = $this->sensor->get($array['sensor_name']);
-        $droneResult = $drone['data'];
-        $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());
-        if (isset($requestArray['sensor_id'])) {
-            unset($requestArray['sensor_id']);
-        }
-        $requestArray['sensor_id'] = $droneResult->id;
-        $droneCreated = $droneResult->values()->save($this->sensorValues->create($requestArray));
+        $sensor = $this->sensor->get($array['sensor_id']);
+        $sensorResult = $sensor['data'];
+        $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());      
+        $valueCreated = $sensorResult->values()->save($this->sensorValues->create($requestArray));
         return ['success' => true,
-            'data' => $droneCreated];
+            'data' => $valueCreated];
     }
 
     public function update($id, $array)
     {
         try {
-            $command = $this->findById($id);
-            $drone = $this->sensor->get($array['sensor_name']);
-            $droneResult = $drone['data'];
-            $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());
-            if (isset($requestArray['sensor_id'])) {
-                unset($requestArray['sensor_id']);
-            }
-            $requestArray['sensor_id'] = $droneResult->id;
-            $command->fill($requestArray);
-            return ['success' => $command->save(),
-                'data' => $command];
+            $value = $this->findById($id);           
+            $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());         
+            $value->fill($requestArray);
+            return ['success' => $value->save(),
+                'data' => $value];
         } catch (ModelNotFoundException $ex) {
             return [
                 'success' => false,
@@ -109,7 +100,7 @@ class SensorValueRepository extends AbstractRepository implements SensorValueRep
 
     private function findById($id)
     {
-        return $this->sensorValues->where('id', $id)->firstOrFail();
+        return $this->sensorValues->findOrFail($id);
     }
 
 }

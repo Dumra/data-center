@@ -21,7 +21,7 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         $this->drone = $drone;
     }
 
-    public function get($name)
+    public function get($id)
     {
         // TODO: Implement getDrone() method.
         if (is_null($name)) {
@@ -33,41 +33,41 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         try {
             return [
                 'success' => true,
-                'data' => $this->findByName($name)
+                'data' => $this->findById($id)
             ];
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => 'Drone with this name does not exist'
+                'msg' => 'Drone with this id does not exist'
             ];
         }
     }
 
-    public function delete($name)
+    public function delete($id)
     {
         // TODO: Implement destroyDrone() method.
         try {
-            $drone = $this->findByName($name);
+            $drone = $this->findBy($id);
             return ['success' => $drone->delete()];
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => "Drone with this name does not exist"
+                'msg' => "Drone with this id does not exist"
             ];
         }
     }
 
-    public function update($name, $requestArray)
+    public function update($id, $requestArray)
     {
         try {
-            $drone = $this->findByName($name);
+            $drone = $this->findBy($id);
             $requestArray = $this->prepareToUpdate($requestArray, $this->drone->getFillable());
             $drone->fill($requestArray);
             return ['success' => $drone->save()];
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => "Drone with this name does not exist"
+                'msg' => "Drone with this id does not exist"
             ];
         }
     }
@@ -88,16 +88,16 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         return $this->checkResult($result, "Drone where $field = $value does not exist");
     }
 
-    public function getDependences($droneName, $dependence)
+    public function getDependences($id, $dependence)
     {
         // TODO: Implement getDependences() method.
         try {
-            $result = $this->findByName($droneName)->$dependence;
+            $result = $this->findById($id)->$dependence;
             return $this->checkResult($result, "Not one $dependence one this drone");
         } catch (ModelNotFoundException $ex) {
             return [
                 'success' => false,
-                'msg' => "Drone with this name does not exit"
+                'msg' => "Drone with this id does not exit"
             ];
         }
     }
@@ -110,9 +110,14 @@ class DroneRepository extends AbstractRepository implements DroneRepositoryInter
         return $this->drone->where($field, $value)->get();
     }
 
-    public function findByName($name)
+    private function findByName($name)
     {
         return $this->drone->where('name', $name)->firstOrFail();
+    }
+	
+	private function findById($id)
+    {
+        return $this->drone->findOrFail($id);
     }
 
 }

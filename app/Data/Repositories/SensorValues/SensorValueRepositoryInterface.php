@@ -12,5 +12,5 @@ use App\Data\Repositories\AbstractCrudInterface;
 
 interface SensorValueRepositoryInterface extends AbstractCrudInterface
 {
-    public function getByDate($droneName, $date, $dateEnd);
+    public function getByDate($sensorId, $date, $dateEnd);
 }

@@ -13,7 +13,8 @@ class AddCoordinatesToValuesSensorTable extends Migration
     public function up()
     {
         Schema::table('sensors_values', function (Blueprint $table) {
-            //
+			$table->float('longitude')->after('id');
+			$table->float('latitude')->after('id');           
         });
     }
 
