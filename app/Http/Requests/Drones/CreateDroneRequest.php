@@ -15,10 +15,10 @@ class CreateDroneRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|string|max:50|regex:/^[\S]+$/',
+            'name' => 'required|string|max:50',
             'status' => 'string|in:active,inactive',
             'type' => 'required|string|in:aircraft, machine',
-            'available' => 'boolean',
+            'available' => 'boolean'
         ];
     }
 }

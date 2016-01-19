@@ -14,10 +14,10 @@ class UpdateDroneRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'string|max:50|regex:/^[\S]+$/',
+            'name' => 'string|max:50',
             'status' => 'string|in:active,inactive',
             'type' => 'string|in:aircraft, machine',
-            'available' => 'boolean',
+            'available' => 'boolean'
         ];
     }
 }
