@@ -46,8 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+        if ($e instanceof NotFoundHttpException) {
+           if (strpos($request->getHost(), 'api') !== false) {
+                return response()->json("Sorry, this url does not exit", 404);
+           }
         } elseif ($e instanceof \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException) {
             return response([
                 'success' => false,
