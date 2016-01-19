@@ -30,8 +30,8 @@ class CommandTableSeeder extends Seeder
         ]);
 
         factory(App\Data\Models\Command::class)->create([
-            'latitude' => 8,
-            'longitude' => 9,
+            'latitude' => 85.11,
+            'longitude' => 93.25,
             'height' => 8,
             'direction' => 'W',
             'added' => '2016-01-15 07:00:00',
