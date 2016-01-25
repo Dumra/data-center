@@ -16,8 +16,8 @@ $router->get('/', function () {
 });
 
 $router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () use ($router) {
-	$router->group(['middleware' => 'jwt.auth'], function () use ($router) {
-		$router->group(['middleware' => 'throttle:5,1'], function () use ($router) {
+	$router->group(['middleware' => 'jwt'], function () use ($router) {
+		$router->group(['middleware' => 'throttle:100,1'], function () use ($router) {
 			// Drones
 			$router->get('/get/drone/{id?}', 'Api\Drones\DroneController@get');
 			$router->get('/getType/drones/{type}', 'Api\Drones\DroneController@getByType');

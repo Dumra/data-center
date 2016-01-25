@@ -3,14 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 abstract class AbstractApiController extends Controller
 {
     protected $model;
+    protected $token;
 
-    protected function get($param = null)
+   /* public function __construct(Request $request)
     {
-        return response($this->model->get($param));
+        $this->token = $request->headers->all();
+    }*/
+
+    protected function get(Request $request, $param = null )
+    {
+        $this->token = $request->headers->get('Authorization');
+        return response(array_merge($this->model->get($param), ['token' =>   $this->token]));
     }
 
     protected function create($requestArray)

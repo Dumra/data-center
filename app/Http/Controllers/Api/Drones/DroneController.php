@@ -21,7 +21,7 @@ class DroneController extends AbstractApiController
 
     public function getSensors($droneId)
     {
-        return response($this->model->getDependences($droneId, 'sensors'));
+        return response(array_merge($this->model->getDependences($droneId, 'sensors'), ['token' => $this->token]));
     }
 
     public function getRoutes($droneId)
