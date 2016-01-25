@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AbstractApiController;
 use App\Data\Repositories\Sensors\SensorRepositoryInterface;
 use App\Http\Requests\Sensors\CreateSensorRequest;
 use App\Http\Requests\Sensors\UpdateSensorRequest;
+use Illuminate\Http\Request;
 
 class SensorController extends AbstractApiController
 {
@@ -14,14 +15,14 @@ class SensorController extends AbstractApiController
         $this->model = $sensor;
     }
 
-    public function getDroneBySensorName($id)
+    public function getDroneBySensorName(Request $request, $id)
     {
-        return response($this->model->getDroneBySensorName($id));
+        return $this->sendResponse($this->model->getDroneBySensorName($id), $request);
     }
 
-    public function getSensorValuesBySensorName($id)
+    public function getSensorValuesBySensorName(Request $request, $id)
     {
-        return response($this->model->getSensorValuesBySensorName($id));
+        return $this->sendResponse($this->model->getSensorValuesBySensorName($id), $request);
     }
 
     public function createSensor(CreateSensorRequest $request)

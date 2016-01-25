@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AbstractApiController;
 use App\Data\Repositories\Routes\RouteRepositoryInterface;
 use App\Http\Requests\Routes\UpdateRouteRequest;
 use App\Http\Requests\Routes\CreateRouteRequest;
+use Illuminate\Http\Request;
 
 class RouteController extends AbstractApiController
 {
@@ -24,8 +25,8 @@ class RouteController extends AbstractApiController
         return $this->update($request, $id);
     }
 
-    public function getRouteByDate($id, $date, $dateEnd = null)
+    public function getRouteByDate(Request $request, $id, $date, $dateEnd = null)
     {
-        return response($this->model->getRouteByDate($id, $date, $dateEnd));
+        return $this->sendResponse($this->model->getRouteByDate($id, $date, $dateEnd), $request);
     }
 }

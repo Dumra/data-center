@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\AbstractApiController;
 use App\Data\Repositories\SensorValues\SensorValueRepositoryInterface;
 use App\Http\Requests\SensorValues\SensorValuesCreateRequest;
 use App\Http\Requests\SensorValues\SensorValuesUpdateRequest;
+use Illuminate\Http\Request;
 
 class SensorValuesController extends AbstractApiController
 {
@@ -20,9 +21,9 @@ class SensorValuesController extends AbstractApiController
         $this->model = $sensorVal;
     }
 
-    public function getValueByDate($sensorId, $date, $dateEnd = null)
+    public function getValueByDate(Request $request, $sensorId, $date, $dateEnd = null)
     {
-        return response($this->model->getByDate($sensorId, $date, $dateEnd));
+        return $this->sendResponse($this->model->getByDate($sensorId, $date, $dateEnd), $request);
     }
 
     public function createValue(SensorValuesCreateRequest $request)

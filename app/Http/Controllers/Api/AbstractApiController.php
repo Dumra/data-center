@@ -7,32 +7,35 @@ use Illuminate\Http\Request;
 
 abstract class AbstractApiController extends Controller
 {
-    protected $model;
-    protected $token;
-
-   /* public function __construct(Request $request)
-    {
-        $this->token = $request->headers->all();
-    }*/
+    protected $model; 
 
     protected function get(Request $request, $param = null )
-    {
-        $this->token = $request->headers->get('Authorization');
-        return response(array_merge($this->model->get($param), ['token' =>   $this->token]));
+    {       
+        return $this->sendResponse($this->model->get($param), $request);
     }
 
     protected function create($requestArray)
     {
-        return response($this->model->create($requestArray->all()));
+        return $this->sendResponse($this->model->create($requestArray->all()), $requestArray);
     }
 
     protected function update($requestArray, $param)
     {
-        return response($this->model->update($param, $requestArray->all()));
+        return $this->sendResponse($this->model->update($param, $requestArray->all()), $requestArray);
     }
 
-    protected function delete($param)
+    protected function delete(Request $request, $param)
     {
-        return response($this->model->delete($param));
+        return $this->sendResponse($this->model->delete($param), $request);
     }
+	
+	protected function getTokenFromHeader($request)
+	{
+		return $request->headers->get('Authorization');
+	}
+	
+	protected function sendResponse($result, $request)
+	{
+		return response(array_merge($result, ['token' => $this->getTokenFromHeader($request)]));
+	}
 }
