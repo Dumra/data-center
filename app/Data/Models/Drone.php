@@ -11,7 +11,7 @@ class Drone extends Model
 	
     protected $table = 'drones';
 
-    protected $fillable = ['name', 'status', 'type', 'available'];
+    protected $fillable = ['name', 'latitude', 'longitude', 'status', 'battery', 'type', 'available'];
     /**
      * The attributes that should be mutated to dates.
      *

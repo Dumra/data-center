@@ -19,7 +19,7 @@ class UpdateCommandRequest extends Request
 			'description' => 'string|max:250',
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
-			'added' => 'date',
+			'added' => 'int',
 			'drone_id' => 'exists:drones,id'
         ];
     }

@@ -39,10 +39,10 @@ abstract class AbstractRepository
 	{
 		if (is_null($dateEnd))
 		{
-			return DateUtility::getDateRange($date);
+			return DateUtility::getRange($date);
 		}
-		$start = DateUtility::getDateRange($date);
-		$end = DateUtility::getDateRange($dateEnd);
+		$start = DateUtility::getRange($date);
+		$end = DateUtility::getRange($dateEnd);
 		return [$start[0], $end[0]];
 	}
 }

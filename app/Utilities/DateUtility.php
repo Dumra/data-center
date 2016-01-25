@@ -12,6 +12,12 @@ class DateUtility
 	{
 		;
 	}
+	
+	public static function getRange($timeStamp)
+	{
+		$date = date('Y-m-d H:i:s', $timeStamp);
+		return self::getDateRange($date);
+	}
 
 	public static function formatDate(DateTime $date)
 	{

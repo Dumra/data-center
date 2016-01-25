@@ -19,7 +19,7 @@ class CreateRouteRequest extends Request
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',
 			'battery' => 'required|integer|between:0,100',
-			'added' => 'required|date',
+			'added' => 'required|int',
 			'drone_id' => 'required|exists:drones,id'
         ];
     }

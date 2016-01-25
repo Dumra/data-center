@@ -16,6 +16,9 @@ class UpdateDroneRequest extends Request
         return [
             'name' => 'string|max:50',
             'status' => 'string|in:active,inactive',
+			'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+            'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+			'battery' => 'integer|between:0,100',
             'type' => 'string|in:aircraft, machine',
             'available' => 'boolean'
         ];

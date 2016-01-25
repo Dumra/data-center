@@ -57,8 +57,10 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
     public function create($array)
     {
 		$drone = $this->drone->get($array['drone_id']);            
-        $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());       
+        $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());
         $droneCreated = $drone['data']->routes()->save($this->route->create($requestArray));
+		$drone['data']->fill($this->prepareForDroneArray($array));
+		$drone['data']->save();
         return [
             'success' => true,
             'data' => $droneCreated
@@ -71,8 +73,13 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
             $route = $this->findById($id);           
             $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());           
             $route->fill($requestArray);
+			$routeSave = $route->save();
+			$droneId = $route->id;
+			$drone = $this->drone->get($droneId); 
+			$drone['data']->fill($this->prepareForDroneArray($array));
+			$drone['data']->save();
             return [
-                'success' => $route->save(),
+                'success' => $routeSave,
                 'data' => $route
             ];
         } catch (ModelNotFoundException $ex) {
@@ -100,5 +107,18 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
     {
         return $this->route->findOrFail($id);
     }
+	
+	private function prepareForDroneArray($requestArray)
+	{
+		$fields = ['latitude', 'longitude', 'battery'];
+		$resultArray = [];
+		foreach ($requestArray as $key => $value) {
+			if (in_array($key, $fields)) {
+				$resultArray[$key] = $value;
+			}
+		}
+		
+		return $requestArray;
+	}
 
 }

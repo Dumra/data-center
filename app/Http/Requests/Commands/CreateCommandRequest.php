@@ -19,7 +19,7 @@ class CreateCommandRequest extends Request
 			'description' => 'required|string|max:250',
             'height' => 'regex:/^\d*(\.\d{2})?$/',
             'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
-			'added' => 'required|date',
+			'added' => 'required|int',
 			'drone_id' => 'required|exists:drones,id'
         ];
     }
