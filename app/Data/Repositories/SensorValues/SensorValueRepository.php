@@ -12,6 +12,7 @@ use App\Data\Models\SensorValue;
 use App\Data\Repositories\AbstractRepository;
 use App\Data\Repositories\Sensors\SensorRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Utilities\DateUtility;
 
 class SensorValueRepository extends AbstractRepository implements SensorValueRepositoryInterface
 {
@@ -48,8 +49,8 @@ class SensorValueRepository extends AbstractRepository implements SensorValueRep
     {
         try {
             $dateInterval = $this->getDateRange($date, $dateEnd);
-            $resultSensor =  $this->sensor->get($sensorId);
-            $result = $resultSensor['data']->values()->whereBetween('added', $dateInterval)->get();
+            $resultSensor =  $this->sensor->findById($sensorId);
+            $result = $resultSensor->values()->whereBetween('added', $dateInterval)->get();
             return $this->checkResult($result, "No one values with this drone by this sensor");
         } catch (ModelNotFoundException $e) {
             return [
@@ -63,7 +64,8 @@ class SensorValueRepository extends AbstractRepository implements SensorValueRep
     {
         $sensor = $this->sensor->get($array['sensor_id']);
         $sensorResult = $sensor['data'];
-        $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());      
+        $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());
+        $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
         $valueCreated = $sensorResult->values()->save($this->sensorValues->create($requestArray));
         return ['success' => true,
             'data' => $valueCreated];
@@ -73,7 +75,8 @@ class SensorValueRepository extends AbstractRepository implements SensorValueRep
     {
         try {
             $value = $this->findById($id);           
-            $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());         
+            $requestArray = $this->prepareToUpdate($array, $this->sensorValues->getFillable());
+            $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
             $value->fill($requestArray);
             return ['success' => $value->save(),
                 'data' => $value];

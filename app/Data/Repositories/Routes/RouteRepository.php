@@ -6,6 +6,7 @@ use App\Data\Models\Route;
 use App\Data\Repositories\AbstractRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Data\Repositories\Drones\DroneRepositoryInterface;
+use App\Utilities\DateUtility;
 
 class RouteRepository extends AbstractRepository implements RouteRepositoryInterface
 {
@@ -27,8 +28,8 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
             ];
         }
         try {
-            $drone = $this->drone->get($id);
-			$result = $drone['data']->routes;
+            $drone = $this->drone->findById($id);
+			$result = $drone->routes;
             return $this->checkResult($result, "No one route with this drone");
         } catch (ModelNotFoundException $e) {
             return [
@@ -43,8 +44,8 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
         try {
             $dateInterval = $this->getDateRange($date, $dateEnd);
             //return $dateInterval;
-			$droneResult = $this->drone->get($droneId);
-            $result = $droneResult['data']->findById($droneId)->routes()->whereBetween('added', $dateInterval)->get();
+			$droneResult = $this->drone->findById($droneId);
+            $result = $droneResult->routes()->whereBetween('added', $dateInterval)->get();
             return $this->checkResult($result, "No one route with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [
@@ -56,8 +57,9 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
 
     public function create($array)
     {
-		$drone = $this->drone->get($array['drone_id']);            
+		$drone = $this->drone->get($array['drone_id']);
         $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());
+        $requestArray['added'] = DateUtility::formatDate($array['added']);
         $droneCreated = $drone['data']->routes()->save($this->route->create($requestArray));
 		$drone['data']->fill($this->prepareForDroneArray($array));
 		$drone['data']->save();
@@ -71,10 +73,11 @@ class RouteRepository extends AbstractRepository implements RouteRepositoryInter
     {
         try {
             $route = $this->findById($id);           
-            $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());           
+            $requestArray = $this->prepareToUpdate($array, $this->route->getFillable());
+            $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
             $route->fill($requestArray);
 			$routeSave = $route->save();
-			$droneId = $route->id;
+			$droneId = $route->drone_id;
 			$drone = $this->drone->get($droneId); 
 			$drone['data']->fill($this->prepareForDroneArray($array));
 			$drone['data']->save();

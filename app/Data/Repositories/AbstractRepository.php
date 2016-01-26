@@ -37,12 +37,6 @@ abstract class AbstractRepository
 
 	protected function getDateRange($date, $dateEnd)
 	{
-		if (is_null($dateEnd))
-		{
-			return DateUtility::getRange($date);
-		}
-		$start = DateUtility::getRange($date);
-		$end = DateUtility::getRange($dateEnd);
-		return [$start[0], $end[0]];
+		return DateUtility::getRange($date, $dateEnd);
 	}
 }
