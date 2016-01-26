@@ -28,6 +28,6 @@ class Command extends Model
 	
 	 public function values()
     {
-        return $this->hasMany('App\Data\Models\TaskValue');
+        return $this->hasMany('App\Data\Models\TaskValue', 'task_id');
     }
 }

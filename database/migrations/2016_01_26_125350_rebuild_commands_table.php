@@ -14,7 +14,7 @@ class RebuildCommandsTable extends Migration
     {
 		Schema::rename('log_commands', 'tasks');
         Schema::table('tasks', function (Blueprint $table) { 
-			$table->enum('status', ['opened', 'in progress', 'failed', 'closed'])->default('opened');
+			$table->enum('status', ['opened', 'in progress', 'failed', 'closed'])->default('opened')->after('description');
 			$table->dropColumn('longitude');
 			$table->dropColumn('latitude');
 			$table->dropColumn('height');

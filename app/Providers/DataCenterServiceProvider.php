@@ -40,6 +40,9 @@ class DataCenterServiceProvider extends ServiceProvider
 		
 		 $this->app->bind('App\\Data\\Repositories\\Users\\UserRepositoryInterface',
             'App\\Data\\Repositories\\Users\\UserRepository');
+
+        $this->app->bind('App\\Data\\Repositories\\TaskValues\\TaskValueRepositoryInterface',
+            'App\\Data\\Repositories\\TaskValues\\TaskValueRepository');
 		
 		$this->app->bind('App\\Services\\MailService\\MailSenderInterface',
             'App\\Services\\MailService\\MailSender');

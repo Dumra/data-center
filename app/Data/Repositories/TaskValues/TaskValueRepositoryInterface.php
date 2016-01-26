@@ -12,5 +12,5 @@ use App\Data\Repositories\AbstractCrudInterface;
 
 interface TaskValueRepositoryInterface extends AbstractCrudInterface
 {
-    public function getByDate($staskId, $date, $dateEnd);
+   // public function getByDate($taskId, $date, $dateEnd);
 }

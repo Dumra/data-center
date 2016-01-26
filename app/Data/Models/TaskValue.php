@@ -1,9 +1,9 @@
 <?php
 
+namespace App\Data\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-namespace App\Data\Models;
 
 class TaskValue extends Model
 {
@@ -14,7 +14,7 @@ class TaskValue extends Model
      *
      * @var array
      */	
-	protected $touches = ['command'];
+	protected $touches = ['task'];
 	
     protected $dates = ['deleted_at'];
 	
@@ -24,6 +24,6 @@ class TaskValue extends Model
 
     public function task()
     {
-        return $this->belongsTo('App\Data\Models\Command');
+        return $this->belongsTo('App\Data\Models\Command', 'task_id');
     }
 }

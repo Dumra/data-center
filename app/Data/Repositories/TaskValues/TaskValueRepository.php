@@ -34,8 +34,8 @@ class TaskValueRepository extends AbstractRepository implements TaskValueReposit
             ];
         }
         try {
-			$resultTask =  $this->command->get($id);
-            $result = $resultTask['data']->values;
+			$resultTask =  $this->command->findById($id);
+            $result = $resultTask->values;
             return $this->checkResult($result, "No one value with this task");
         } catch (ModelNotFoundException $e) {
             return [
@@ -45,7 +45,7 @@ class TaskValueRepository extends AbstractRepository implements TaskValueReposit
         }
     }
 
-    public function getByDate($taskId, $date, $dateEnd)
+    /*public function getByDate($taskId, $date, $dateEnd)
     {
         try {
             $dateInterval = $this->getDateRange($date, $dateEnd);
@@ -58,15 +58,13 @@ class TaskValueRepository extends AbstractRepository implements TaskValueReposit
                 'msg' => 'Task with this id does not exist'
             ];
         }
-    }
+    }*/
 
     public function create($array)
     {
-        $sensor = $this->command->get($array['task_id']);
-        $sensorResult = $sensor['data'];
+        $sensor = $this->command->findById($array['task_id']);
         $requestArray = $this->prepareToUpdate($array, $this->taskValues->getFillable());
-        $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
-        $valueCreated = $sensorResult->values()->save($this->taskValues->create($requestArray));
+        $valueCreated = $sensor->values()->create($array);
         return ['success' => true,
             'data' => $valueCreated];
     }
@@ -76,7 +74,6 @@ class TaskValueRepository extends AbstractRepository implements TaskValueReposit
         try {
             $value = $this->findById($id);           
             $requestArray = $this->prepareToUpdate($array, $this->taskValues->getFillable());
-            $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
             $value->fill($requestArray);
             return ['success' => $value->save(),
 					'data' => $value];

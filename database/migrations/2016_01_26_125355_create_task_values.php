@@ -24,6 +24,7 @@ class CreateTaskValues extends Migration
                 ->on('tasks')
                 ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

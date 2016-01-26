@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\SensorValues;
+namespace App\Http\Controllers\Api\TaskValues;
 
 use App\Http\Controllers\Api\AbstractApiController;
 use App\Data\Repositories\TaskValues\TaskValueRepositoryInterface;
@@ -15,10 +15,10 @@ class TaskValuesController extends AbstractApiController
         $this->model = $taskVal;
     }
 
-    public function getValueByDate(Request $request, $taskId, $date, $dateEnd = null)
+   /* public function getValueByDate(Request $request, $taskId, $date, $dateEnd = null)
     {
         return $this->sendResponse($this->model->getByDate($taskId, $date, $dateEnd), $request);
-    }
+    }*/
 
     public function createValue(TaskValuesCreateRequest $request)
     {

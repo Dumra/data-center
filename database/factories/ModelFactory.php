@@ -47,20 +47,30 @@ $factory->define(App\Data\Models\Route::class, function (Faker\Generator $faker)
 
 $factory->define(App\Data\Models\Command::class, function (Faker\Generator $faker) {
     return [
-        'latitude' => 25.52,
-        'longitude' => 35.20,
-		'description' => 'Here will be some description',
-        'height' => 4,
-        'direction' => 'N',
+        // 'latitude' => 25.52,
+        // 'longitude' => 35.20,
+        'description' => 'Here will be some description',
+        // 'height' => 4,
+        // 'direction' => 'N',
         'added' => '1/12/2016 05:00:00',
         'drone_id' => 1
+    ];
+});
+
+$factory->define(App\Data\Models\TaskValue::class, function (Faker\Generator $faker) {
+    return [
+        'latitude' => 25.52,
+        'longitude' => 35.20,
+        'height' => 4,
+        'direction' => 'N',
+        'task_id' => 1
     ];
 });
 
 $factory->define(App\Data\Models\SensorValue::class, function (Faker\Generator $faker) {
     return [
         'value' => 25.52,
-		'latitude' => 28.52,
+        'latitude' => 28.52,
         'longitude' => 89.20,
         'added' => '1/12/2016 05:00:00',
         'sensor_id' => 1

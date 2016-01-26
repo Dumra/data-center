@@ -6,6 +6,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Closure;
 use Tymon\JWTAuth\Middleware\BaseMiddleware;
+use Illuminate\Support\Facades\Config;
 
 class JwtAuthMiddleware extends BaseMiddleware
 {
@@ -20,6 +21,8 @@ class JwtAuthMiddleware extends BaseMiddleware
     public function handle($request, Closure $next)
     {
         $expired = false;
+        \Config::set('session.driver', 'array');
+        \Config::set('cookie.driver', 'array');
 
         if (! $token = $this->auth->setRequest($request)->getToken()) {
             return $this->respond('tymon.jwt.absent', 'token_not_provided', 400);
