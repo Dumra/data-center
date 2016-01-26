@@ -9,9 +9,9 @@ class Command extends Model
 {
 	use SoftDeletes;
 	
-    protected $table = 'log_commands';
+    protected $table = 'tasks';
 
-    protected $fillable = ['latitude', 'description', 'longitude', 'height', 'direction', 'added', 'drone_id'];
+    protected $fillable = ['description',  'status', 'added', 'drone_id'];
 	
 	protected $touches = ['drone'];
     /**
@@ -24,5 +24,10 @@ class Command extends Model
     public function drone()
     {
         return $this->belongsTo('App\Data\Models\Drone');
+    }
+	
+	 public function values()
+    {
+        return $this->hasMany('App\Data\Models\TaskValue');
     }
 }

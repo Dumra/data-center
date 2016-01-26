@@ -34,8 +34,9 @@ $router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () us
 			$router->get('/get/route/{droneId?}', 'Api\Routes\RouteController@get');
 			$router->get('/get/route/{droneId}/{date}/{date_end?}', 'Api\Routes\RouteController@getRouteByDate');
 			// Commands
-			$router->get('/get/command/{droneId?}', 'Api\Commands\CommandController@get');
-			$router->get('/get/command/{droneId}/{date}/{date_end?}', 'Api\Commands\CommandController@getCommandByDate');
+			$router->get('/get/task/{droneId?}', 'Api\Commands\CommandController@get');
+			$router->get('/get/task/{droneId}/{date}/{date_end?}', 'Api\Commands\CommandController@getCommandByDate');
+			$router->get('/getTaskValues/task/{id}', 'Api\Commands\CommandController@getTaskValuesByTaskId');
 			// Values
 			$router->get('/get/values/{sensorId?}', 'Api\SensorValues\SensorValuesController@get');
 			$router->get('/get/values/{sensorId}/{date}/{date_end?}', 'Api\SensorValues\SensorValuesController@getValueByDate');
@@ -53,9 +54,9 @@ $router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () us
 		$router->put('/update/route/{id}', 'Api\Routes\RouteController@updateRoute');
 		$router->delete('delete/route/{id}', 'Api\Routes\RouteController@delete');
 		// Commands
-		$router->post('add/command', 'Api\Commands\CommandController@addCommand');
-		$router->put('/update/command/{id}', 'Api\Commands\CommandController@updateCommand');
-		$router->delete('delete/command/{id}', 'Api\Commands\CommandController@delete');
+		$router->post('add/task', 'Api\Commands\CommandController@addCommand');
+		$router->put('/update/task/{id}', 'Api\Commands\CommandController@updateCommand');
+		$router->delete('delete/task/{id}', 'Api\Commands\CommandController@delete');
 		// Values
 		$router->post('add/value', 'Api\SensorValues\SensorValuesController@createValue');
 		$router->put('/update/value/{id}', 'Api\SensorValues\SensorValuesController@updateValue');

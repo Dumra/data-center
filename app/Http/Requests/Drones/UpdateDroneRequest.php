@@ -19,7 +19,7 @@ class UpdateDroneRequest extends Request
 			'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
 			'battery' => 'integer|between:0,100',
-            'type' => 'string|in:aircraft, machine',
+            'type' => 'string|in:aircraft,machine',
             'available' => 'boolean'
         ];
     }

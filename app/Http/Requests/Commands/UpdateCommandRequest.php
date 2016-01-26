@@ -14,11 +14,12 @@ class UpdateCommandRequest extends Request
     public function rules()
     {
         return [
-            'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
-            'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+           // 'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+           // 'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
 			'description' => 'string|max:250',
-            'height' => 'regex:/^\d*(\.\d{2})?$/',
-            'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
+			'status' => 'in:opened,in progress,failed,closed',
+           // 'height' => 'regex:/^\d*(\.\d{2})?$/',
+           // 'direction' => 'in:N,E,S,W,NW,NE,SE,SW',			
 			'added' => 'int',
 			'drone_id' => 'exists:drones,id'
         ];

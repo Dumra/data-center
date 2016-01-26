@@ -28,9 +28,9 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
             ];
         }
         try {
-            $drone = $this->drone->get($id);
-            $result = $drone['data']->commands;
-            return $this->checkResult($result, "No one command with this drone");
+            $drone = $this->drone->findById($id);
+			$result = $drone->commands;
+            return $this->checkResult($result, "No one tasks with this drone");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
@@ -45,7 +45,7 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
             $dateInterval = $this->getDateRange($date, $dateEnd);
             $drone = $this->drone->findById($droneId);
             $result = $drone->commands()->whereBetween('added', $dateInterval)->get();
-            return $this->checkResult($result, "No one command with this drone by this date");
+            return $this->checkResult($result, "No one tasks with this drone by this date");
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
@@ -53,16 +53,35 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
             ];
         }
     }
+	
+	public function getTaskValuesByTaskId($id)
+	{
+		try {
+            $result = $this->findById($id)->values;
+            return $this->checkResult($result, "Not one values for this task");
+        } catch (ModelNotFoundException $ex) {
+            return [
+                'success' => false,
+                'msg' => "Task with this id does not exit"
+            ];
+        }
+	}	
 
     public function create($array)
     {
         $drone = $this->drone->get($array['drone_id']);
         $requestArray = $this->prepareToUpdate($array, $this->command->getFillable());
         $requestArray['added'] = DateUtility::formatDate($requestArray['added']);
-        $droneCreated = $drone['data']->commands()->save($this->command->create($requestArray));
+        $taskCreated = $drone['data']->commands()->create($requestArray);
+		if (array_key_exists('values', $array)){
+			$arrayValues = $array['values'];
+			foreach($arrayValues as $array) {
+				$taskCreated->values()->create($array);
+			}
+		}
         return [
             'success' => true,
-            'data' => $droneCreated
+            'data' => $taskCreated->values
         ];
     }
 
@@ -80,7 +99,7 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
         } catch (ModelNotFoundException $ex) {
             return [
                 'success' => false,
-                'msg' => "This command does not exit"
+                'msg' => "This task does not exit"
             ];
         }
     }
@@ -93,12 +112,12 @@ class CommandRepository extends AbstractRepository implements CommandRepositoryI
         } catch (ModelNotFoundException $e) {
             return [
                 'success' => false,
-                'msg' => "This command does not exit"
+                'msg' => "This task does not exit"
             ];
         }
     }
 
-    private function findById($id)
+    public function findById($id)
     {
         return $this->command->findOrFail($id);
     }
