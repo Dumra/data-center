@@ -17,7 +17,7 @@ $router->get('/', function () {
 
 $router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () use ($router) {
     $router->group(['middleware' => 'jwt'], function () use ($router) {
-        $router->group(['middleware' => 'throttle:100,1'], function () use ($router) {
+      //  $router->group(['middleware' => 'throttle:100,1'], function () use ($router) {
             // Drones
             $router->get('/get/drone/{id?}', 'Api\Drones\DroneController@get');
             $router->get('/getType/drones/{type}', 'Api\Drones\DroneController@getByType');
@@ -43,7 +43,7 @@ $router->group(['domain' => env('API_DOMAIN'), 'prefix' => 'v1'], function () us
             //Task values
             $router->get('/get/taskValues/{taskId?}', 'Api\TaskValues\TaskValuesController@get');
            // $router->get('/get/taskValues/{taskId}/{date}/{date_end?}', 'Api\TaskValues\TaskValuesController@getValueByDate');
-        });
+      //  });
         // Drones
         $router->post('/add/drone', 'Api\Drones\DroneController@createDrone');
         $router->put('/update/drone/{id}', 'Api\Drones\DroneController@updateDrone');
