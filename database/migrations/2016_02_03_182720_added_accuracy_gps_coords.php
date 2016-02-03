@@ -13,7 +13,9 @@ class AddedAccuracyGpsCoords extends Migration
     public function up()
     {
         Schema::table('drones', function (Blueprint $table) {
-            //
+            $table->double('latitude', 15, 6)->nullable()->change();
+            $table->double('longitude', 15, 6)->nullable()->change();
+			$table->float('height')->nullable();
         });
     }
 
@@ -24,8 +26,8 @@ class AddedAccuracyGpsCoords extends Migration
      */
     public function down()
     {
-        Schema::table('drones', function (Blueprint $table) {
-            //
+        Schema::table('drones', function (Blueprint $table) {			
+         
         });
     }
 }

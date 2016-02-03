@@ -19,6 +19,7 @@ class CreateDroneRequest extends Request
             'status' => 'string|in:active,inactive',
 			'latitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
             'longitude' => 'regex:/^([0-9.-]+).+?([0-9.-]+)$/',
+			'height' => 'regex:/^\d*(\.\d{2})?$/',
 			'battery' => 'integer|between:0,100',
             'type' => 'required|string|in:aircraft,machine',
             'available' => 'boolean'
