@@ -13,8 +13,10 @@ class AddedAccuracyGpsCoords extends Migration
     public function up()
     {
         Schema::table('drones', function (Blueprint $table) {
-            $table->double('latitude', 15, 6)->nullable()->change();
-            $table->double('longitude', 15, 6)->nullable()->change();
+           // $table->double('latitude', 15, 6)->nullable()->change();
+           // $table->double('longitude', 15, 6)->nullable()->change();
+			DB::statement("ALTER TABLE `drones` MODIFY COLUMN `latitude` DOUBLE(15, 6) NULL");
+			DB::statement("ALTER TABLE `drones` MODIFY COLUMN `longitude` DOUBLE(15, 6) NULL");
 			$table->float('height')->nullable();
         });
     }
